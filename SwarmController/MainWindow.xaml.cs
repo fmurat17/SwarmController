@@ -123,3 +123,9 @@ namespace SwarmController
         }
     }
 }
+
+
+// TODO:
+//plan, swarm ve log için altyapı kuruldu.
+//sonraki aşama drone'ları uçurup paket dinlemek.
+//bundan sonra da gelen paketlere göre drone'lara yeni komutlar göndermek
