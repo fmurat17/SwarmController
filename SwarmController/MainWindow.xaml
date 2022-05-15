@@ -1,0 +1,28 @@
+﻿<Window x:Class="SwarmController.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SwarmController"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+
+        <gmaps:GMapControl x:Name="mapView"
+                           Grid.Row="1"
+                           Loaded="mapView_Loaded"
+                           MouseLeftButtonUp="mapView_MouseLeftButtonUp"/>
+
+        <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" Margin="146,40,0,0" VerticalAlignment="Top" Width="75"
+                Click="btn_Surveillance_Click"/>
+
+    </Grid>
+</Window>
