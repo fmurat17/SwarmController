@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SwarmController.Models.Plan
 {
-    class Route
+    public class Route
     {
         public GMapRoute rota;
         public List<MissionItem> missionItems;

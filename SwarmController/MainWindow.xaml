@@ -21,8 +21,17 @@
                            Loaded="mapView_Loaded"
                            MouseLeftButtonUp="mapView_MouseLeftButtonUp"/>
 
-        <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" Margin="146,40,0,0" VerticalAlignment="Top" Width="75"
+        <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
+                Margin="20"
+                Grid.Row="0"
                 Click="btn_Surveillance_Click"/>
+
+        <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="300" Height="150"
+                  Margin="0,0,0,20"
+                  Grid.Row="0"
+                  ItemsSource="{Binding logList}"/>
+        <Button x:Name="btn_StartMission" Content="Start Mission" HorizontalAlignment="Left" Margin="132,20,0,0" VerticalAlignment="Top" Width="76"
+                Click="btn_StartMission_Click"/>
 
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SwarmController.Models.Plan
 {
-    class PlanController
+    public class PlanController
     {
         private static PlanController planController = null;
 
@@ -15,16 +15,17 @@ namespace SwarmController.Models.Plan
             if (planController == null)
             {
                 planController = new PlanController();
-                allRoutes = new List<Route>();
             }
 
             return planController;
         }
 
 
-        public static MissionItem selectedMissionItem = null;
-        public static Route selectedRoute = null;
+        public MissionItem selectedMissionItem = null;
+        public Route selectedRoute = null;
+        //public MissionBase currentMission = null;
 
-        public static List<Route> allRoutes;
+        public List<Route> allRoutes = new List<Route>();
+        public List<MissionBase> allMissions = new List<MissionBase>();
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SwarmController.Models.Plan
 {
-    class MissionItem
+    public class MissionItem
     {
         public int itemOrder { get; set; }
         public GMapMarker marker { get; set; }

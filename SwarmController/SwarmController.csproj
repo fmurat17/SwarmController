@@ -96,6 +96,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\LogViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,9 +120,12 @@
     <Compile Include="Markers\MissionItemMarker.xaml.cs">
       <DependentUpon>MissionItemMarker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Plan\MissionBase.cs" />
     <Compile Include="Models\Plan\MissionItem.cs" />
+    <Compile Include="Models\Plan\MissionSurvelliance.cs" />
     <Compile Include="Models\Plan\PlanController.cs" />
     <Compile Include="Models\Plan\Route.cs" />
+    <Compile Include="Models\Swarm\SwarmManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,8 +153,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Swarm\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
