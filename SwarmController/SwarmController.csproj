@@ -158,6 +158,16 @@
   <ItemGroup>
     <Resource Include="Resources\bigMarkerGreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{9c106753-239c-4bd2-9d38-d39cc9697c78}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mavlink\MAVLink.csproj">
+      <Project>{4d945a93-d46d-4140-bb68-c30c7c46352c}</Project>
+      <Name>MAVLink</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Haberlesme
 {
-    public class SendPacket
+    public static class SendPacket
     {
-        private MAVLink.MavlinkParse mavparse = new MAVLink.MavlinkParse();
+        private static MAVLink.MavlinkParse mavparse = new MAVLink.MavlinkParse();
 
-        public void send_param_request_list_t_tcp(TcpClient tcpClient)
+        public static void send_param_request_list_t_tcp(TcpClient tcpClient)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -37,7 +37,7 @@ namespace Haberlesme
         }
 
 
-        public void send_mission_clear_all_tcp(TcpClient tcpClient, MAVLink.MAV_MISSION_TYPE mav_mission_type)
+        public static void send_mission_clear_all_tcp(TcpClient tcpClient, MAVLink.MAV_MISSION_TYPE mav_mission_type)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -62,7 +62,7 @@ namespace Haberlesme
         }
 
 
-        public void send_mission_request_list_t_tcp(TcpClient tcpClient, MAVLink.MAV_MISSION_TYPE mav_mission_type)
+        public static void send_mission_request_list_t_tcp(TcpClient tcpClient, MAVLink.MAV_MISSION_TYPE mav_mission_type)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -87,7 +87,7 @@ namespace Haberlesme
         }
 
 
-        public void send_mavlink_mission_request_int_t_tcp(TcpClient tcpClient, int seq, MAVLink.MAV_MISSION_TYPE mav_mission_type)
+        public static void send_mavlink_mission_request_int_t_tcp(TcpClient tcpClient, int seq, MAVLink.MAV_MISSION_TYPE mav_mission_type)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -113,7 +113,7 @@ namespace Haberlesme
         }
 
 
-        public void sen_mavlink_mission_count_t_tcp(TcpClient tcpClient, int number_of_mission_items, MAVLink.MAV_MISSION_TYPE mav_mission_type)
+        public static void send_mavlink_mission_count_t_tcp(TcpClient tcpClient, int number_of_mission_items, MAVLink.MAV_MISSION_TYPE mav_mission_type)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -139,7 +139,7 @@ namespace Haberlesme
         }
 
 
-        public void send_mavlink_mission_item_int_t_tcp(TcpClient tcpClient, float param1, float param2, float param3, float param4, int x, int y, float z, ushort seq, MAVLink.MAV_CMD mav_cmd, byte target_system, byte target_component, MAVLink.MAV_FRAME mav_frame, MAVLink.MAV_MISSION_TYPE mission_type)
+        public static void send_mavlink_mission_item_int_t_tcp(TcpClient tcpClient, float param1, float param2, float param3, float param4, int x, int y, float z, ushort seq, MAVLink.MAV_CMD mav_cmd, byte target_system, byte target_component, MAVLink.MAV_FRAME mav_frame, MAVLink.MAV_MISSION_TYPE mission_type)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();
@@ -176,7 +176,7 @@ namespace Haberlesme
         }
 
 
-        public void send_mavlink_command_long_t_tcp(TcpClient tcpClient, float param1, float param2, float param3, float param4, float param5, float param6, float param7, MAVLink.MAV_CMD mav_cmd)
+        public static void send_mavlink_command_long_t_tcp(TcpClient tcpClient, float param1, float param2, float param3, float param4, float param5, float param6, float param7, MAVLink.MAV_CMD mav_cmd)
         {
             int seqno = 0;
             NetworkStream networkStream = tcpClient.GetStream();

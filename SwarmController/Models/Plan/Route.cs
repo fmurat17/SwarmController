@@ -9,8 +9,9 @@ namespace SwarmController.Models.Plan
 {
     public class Route
     {
-        public GMapRoute rota;
+        public GMapRoute gMapRoute;
         public List<MissionItem> missionItems;
+        public int missionID;
 
         public Route()
         {

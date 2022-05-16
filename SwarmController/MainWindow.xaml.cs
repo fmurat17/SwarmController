@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,6 +43,7 @@ namespace SwarmController
         {
             InitializeComponent();
             lv_Log.DataContext = logViewModel;
+            sm.createDrones();
         }
 
 
@@ -92,6 +94,7 @@ namespace SwarmController
                     sm.currentMission = ms;
                     pc.allMissions.Add(ms);
                     addLog("bottomUpCorner selected");
+                    ms.createRoutes();
 
                     surveillanceClickCounter = 0;
                     corners.Clear();
@@ -112,7 +115,7 @@ namespace SwarmController
             MessageBox.Show("Choose TopLeft and BottomRight positions of field!");
         }
 
-        private void addLog(string log_string)
+        public void addLog(string log_string)
         {
             logViewModel.logList.Insert(0, log_string);
         }
@@ -121,11 +124,31 @@ namespace SwarmController
         {
             sm.startMission();
         }
+
+        private void btn_CreateDrones_Click(object sender, RoutedEventArgs e)
+        {
+            Thread createDronesThread = new Thread(() => CreateDrones(3));
+            createDronesThread.Start();
+        }
+
+        private void CreateDrones(int numberOfDrones)
+        {
+            Process bashProcess = new Process();
+
+            bashProcess.StartInfo.FileName = @"D:\cygwin64\bin\bash.exe";
+            bashProcess.StartInfo.Arguments = $"--login -i -l -c 'cd ardupilot/ArduCopter; ../Tools/autotest/sim_vehicle.py -n{numberOfDrones}'";
+            bashProcess.StartInfo.UseShellExecute = true;
+
+            bashProcess.Start();
+            bashProcess.WaitForExit();
+        }
     }
 }
 
 
 // TODO:
-//plan, swarm ve log için altyapı kuruldu.
-//sonraki aşama drone'ları uçurup paket dinlemek.
+//plan, swarm ve log için altyapı kuruldu. ++
+//oluşturulan plan dronelara dağıtılsın ve yüklensim ++
+//sonraki aşama drone'ları uçurup paket dinlemek. ->
 //bundan sonra da gelen paketlere göre drone'lara yeni komutlar göndermek
+//sm.startMission(); parametre olarak görevi almalı
