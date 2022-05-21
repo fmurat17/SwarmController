@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SwarmController.Models.Swarm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -11,7 +12,8 @@ namespace SwarmController.Models.Plan
     {
         public int missionID;
         public int numberOfDronesInMission;
-        public List<int> assignedDrones;
+        //public List<int> assignedDronePorts;
         public List<TcpClient> tcpClients;
+        public List<Drone> drones;
     }
 }

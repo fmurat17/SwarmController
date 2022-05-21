@@ -44,6 +44,7 @@ namespace SwarmController
             InitializeComponent();
             lv_Log.DataContext = logViewModel;
             sm.createDrones();
+            sm.InitListenAllDrones();
         }
 
 
@@ -77,7 +78,7 @@ namespace SwarmController
                 MissionItem missionItem = new MissionItem();
                 GMapMarker gmapMarker = new GMapMarker(coords);
                 gmapMarker.Shape = new MissionItemMarker();
-                gmapMarker.Offset = new Point(-10, -20);
+                gmapMarker.Offset = new Point(-10, -20); // -15,-15 dronemarker
                 missionItem.marker = gmapMarker;
                 mapView.Markers.Add(gmapMarker);
 
@@ -101,8 +102,6 @@ namespace SwarmController
                     clickFunction = ClickFunction.Select;
 
                 }
-
-                
             }
 
         }
@@ -129,6 +128,8 @@ namespace SwarmController
         {
             Thread createDronesThread = new Thread(() => CreateDrones(3));
             createDronesThread.Start();
+
+            
         }
 
         private void CreateDrones(int numberOfDrones)

@@ -1,6 +1,7 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsPresentation;
 using SwarmController.Markers;
+using SwarmController.Models.Swarm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace SwarmController.Models.Plan
         {
             this.missionID = missionID;
             routes = new List<Route>();
-            assignedDrones = new List<int>();
+            drones = new List<Drone>();
             tcpClients = new List<TcpClient>();
         }
 
