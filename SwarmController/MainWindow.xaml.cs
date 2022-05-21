@@ -35,6 +35,7 @@ namespace SwarmController
         public MissionSurvelliance ms;
         public int missionIDCounter;
         public LogViewModel logViewModel = new LogViewModel();
+        public List<GMapMarker> droneMarkers = new List<GMapMarker>();
 
         SwarmManager sm = SwarmManager.getSwarmManager();
         PlanController pc = PlanController.getPlanController();
@@ -43,10 +44,58 @@ namespace SwarmController
         {
             InitializeComponent();
             lv_Log.DataContext = logViewModel;
+
             sm.createDrones();
+
+            createDroneMarkers();
+            UpdateAllDronesInMap();
+
             sm.InitListenAllDrones();
         }
 
+        private void createDroneMarkers()
+        {
+            int totalNumberOfDrones = sm.totalNumberOfDrones;
+
+            for(int i = 0; i < totalNumberOfDrones; i++)
+            {
+                //GMapMarker drone = new GMapMarker(new PointLatLng(0,0));
+                //drone.Shape = new DroneMarker();
+                //drone.Offset = new Point(-15, -15);
+
+                //sm.allDrones[i].droneMarker = drone;
+
+                mapView.Markers.Add(sm.allDrones[i].droneMarker);
+                //droneMarkers.Add(drone);
+            }
+        }
+
+        private void UpdateAllDronesInMap()
+        {
+            for (int i = 0; i < sm.allDrones.Count; i++)
+            {
+                int k = i;
+                Thread thread = new Thread(() => updateDroneInMap(sm.allDrones[k]));
+                thread.Start();
+            }
+        }
+
+        private void updateDroneInMap(Drone drone)
+        {
+            while (true)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    mapView.Markers.Remove(drone.droneMarker);
+
+                    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
+
+                    mapView.Markers.Add(drone.droneMarker);
+                }));
+                
+                Thread.Sleep(400);
+            }
+        }
 
         private void mapView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -150,6 +199,7 @@ namespace SwarmController
 // TODO:
 //plan, swarm ve log için altyapı kuruldu. ++
 //oluşturulan plan dronelara dağıtılsın ve yüklensim ++
-//sonraki aşama drone'ları uçurup paket dinlemek. ->
-//bundan sonra da gelen paketlere göre drone'lara yeni komutlar göndermek
+//drone'ları dinle
+//drone'ları uçur
+//bağlantı kes ve yeni rota oluşturup gönder
 //sm.startMission(); parametre olarak görevi almalı
