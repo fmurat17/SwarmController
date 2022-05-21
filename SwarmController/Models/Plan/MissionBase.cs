@@ -12,7 +12,7 @@ namespace SwarmController.Models.Plan
     {
         public int missionID;
         public int numberOfDronesInMission;
-        //public List<int> assignedDronePorts;
+        public List<int> assignedDronePorts;
         public List<TcpClient> tcpClients;
         public List<Drone> drones;
     }

@@ -57,7 +57,7 @@ namespace SwarmController.Models.Swarm
         {
             get
             {
-                _droneID = (this.port - 5763 / 10);
+                _droneID = (this.port - 5763) / 10;
                 return _droneID;
             }
             set
@@ -80,6 +80,9 @@ namespace SwarmController.Models.Swarm
             this.roll       = 0;
             this.yaw        = 0;
             this.pitch      = 0;
+
+            tcpClient = new TcpClient();
+            tcpClient.Connect("127.0.0.1", port);
         }
     }
 

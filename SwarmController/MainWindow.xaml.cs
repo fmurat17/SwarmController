@@ -1,5 +1,6 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsPresentation;
+using Haberlesme;
 using SwarmController.Enums;
 using SwarmController.Markers;
 using SwarmController.Models.Plan;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,6 +46,8 @@ namespace SwarmController
         {
             InitializeComponent();
             lv_Log.DataContext = logViewModel;
+
+            //btn_CreateDrones_Click(null, null);
 
             sm.createDrones();
 
@@ -93,7 +97,7 @@ namespace SwarmController
                     mapView.Markers.Add(drone.droneMarker);
                 }));
                 
-                Thread.Sleep(400);
+                Thread.Sleep(1000);
             }
         }
 
@@ -177,8 +181,6 @@ namespace SwarmController
         {
             Thread createDronesThread = new Thread(() => CreateDrones(3));
             createDronesThread.Start();
-
-            
         }
 
         private void CreateDrones(int numberOfDrones)
@@ -199,7 +201,9 @@ namespace SwarmController
 // TODO:
 //plan, swarm ve log için altyapı kuruldu. ++
 //oluşturulan plan dronelara dağıtılsın ve yüklensim ++
-//drone'ları dinle
-//drone'ları uçur
+//drone'ları dinle ++
+//drone'ları uçur ++
+//begininvoke yerine invoke kullan, güncelleme hızını artır
+//optimize edilecek bir şey varsa optimize et
 //bağlantı kes ve yeni rota oluşturup gönder
 //sm.startMission(); parametre olarak görevi almalı

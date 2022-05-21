@@ -32,13 +32,26 @@ namespace SwarmController.Models.Swarm
         //public Dictionary<int, int> allDrones = new Dictionary<int, int>();
         public List<Drone> allDrones = new List<Drone>();
 
+        public Drone getDroneByMissionIdAndPort(int missionID, int port)
+        {
+            foreach(Drone drone in allDrones)
+            {
+                if(drone.missionID == missionID && drone.port == port)
+                {
+                    return drone;
+                }
+            }
+
+            return new Drone(-10,-10);
+        }
+
         public void createDrones()
         {
             for(int i = 0; i < totalNumberOfDrones; i++)
             {
                 int port = 5760 + i * 10 + 3;
                 Drone drone = new Drone(port, -1);
-                drone.tcpClient = new TcpClient();
+                //drone.tcpClient = new TcpClient();
                 allDrones.Add(drone);
                 //allDrones.Add(port, -1);
             }
@@ -62,7 +75,9 @@ namespace SwarmController.Models.Swarm
         public void ListenDrone(Drone drone)
         {
             //drone.tcpClient.Connect(localhost, drone.port);
-            TcpClient tcpClient = new TcpClient(localhost, drone.port);
+            //TcpClient tcpClient = new TcpClient(localhost, drone.port);
+
+            TcpClient tcpClient = drone.tcpClient;
 
             // GLOBAL_POSITION_INT - lat lng alt
             SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
@@ -93,24 +108,33 @@ namespace SwarmController.Models.Swarm
             {
                 var packet = ReceivePacket.ReceieveTCPPackets(tcpClient);
 
-                switch (packet.msgtypename)
+                try
                 {
-                    case "HEARTBEAT":
-                        break;
-                    case "ATTITUDE":
-                        MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
-                        drone.roll = attitude.roll;
-                        drone.yaw = attitude.yaw;
-                        drone.pitch = attitude.pitch;
-                        break;
-                    case "GLOBAL_POSITION_INT":
-                        MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
-                        drone.lat = pos.lat / 1e7;
-                        drone.lng = pos.lon / 1e7;
-                        break;
+                    switch (packet.msgtypename)
+                    {
+                        case "HEARTBEAT":
+                            break;
+                        case "ATTITUDE":
+                            MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
+                            drone.roll = attitude.roll;
+                            drone.yaw = attitude.yaw;
+                            drone.pitch = attitude.pitch;
+                            break;
+                        case "GLOBAL_POSITION_INT":
+                            MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
+                            drone.lat = pos.lat / 1e7;
+                            drone.lng = pos.lon / 1e7;
+                            break;
+                    }
+
+                    Debug.WriteLine($"{drone.port} -> {packet}");
+                }
+                catch
+                {
+                    Debug.WriteLine("ListenDrone -> error");
                 }
 
-                //Debug.WriteLine($"{drone.port} -> {packet}");
+                
             }
         }
 
@@ -173,12 +197,13 @@ namespace SwarmController.Models.Swarm
                 if (allDrones[p].missionID == -1)
                 {
                     allDrones[p].missionID = missionID;
-                    TcpClient tcpClient = new TcpClient();
-                    currentMission.tcpClients.Add(tcpClient);
-                    //currentMission.assignedDronePorts.Add(port);
-                    Drone newDrone = new Drone(port, missionID);
-                    newDrone.tcpClient = tcpClient;
-                    currentMission.drones.Add(newDrone);
+                    currentMission.assignedDronePorts.Add(port);
+                    //TcpClient tcpClient = new TcpClient();
+                    //currentMission.tcpClients.Add(tcpClient);
+                    ////currentMission.assignedDronePorts.Add(port);
+                    //Drone newDrone = new Drone(port, missionID);
+                    //newDrone.tcpClient = tcpClient;
+                    //currentMission.drones.Add(newDrone);
                     i++;
                 }
                 p++;
@@ -200,11 +225,16 @@ namespace SwarmController.Models.Swarm
 
         public void uploadMission(int i)
         {
-            TcpClient tcpClient = currentMission.tcpClients[i];
-            //int port = currentMission.assignedDronePorts[i];
-            int port = currentMission.drones[i].port;
+            //TcpClient tcpClient = currentMission.tcpClients[i];
+            ////int port = currentMission.assignedDronePorts[i];
+            //int port = currentMission.drones[i].port;
 
-            currentMission.tcpClients[i].Connect(localhost, port);
+            //currentMission.tcpClients[i].Connect(localhost, port);
+
+            int missionId = currentMission.missionID;
+            int port = currentMission.assignedDronePorts[i];
+            Drone drone = getDroneByMissionIdAndPort(missionId, port);
+            TcpClient tcpClient = drone.tcpClient;
 
             int numberOfMissionItems = (currentMission as MissionSurvelliance).routes[i].gMapRoute.Points.Count;
             Debug.WriteLine($"mission_item: {numberOfMissionItems}, {port}");
@@ -215,23 +245,30 @@ namespace SwarmController.Models.Swarm
             for (int j = 0; j < numberOfMissionItems; j++)
             {
                 Debug.WriteLine($"{j}, {port}");
-                if (ReceivePacket.ReceiveTCPPacket(tcpClient, "MISSION_REQUEST"))
+                try
                 {
-                    int lat = (int)((currentMission as MissionSurvelliance).routes[i].missionItems[j].koordinat.Lat * 1e7);
-                    int lng = (int)((currentMission as MissionSurvelliance).routes[i].missionItems[j].koordinat.Lng * 1e7);
-                    float alt = (float)(currentMission as MissionSurvelliance).routes[i].missionItems[j].altitude;
+                    if (ReceivePacket.ReceiveTCPPacket(tcpClient, "MISSION_REQUEST"))
+                    {
+                        int lat = (int)((currentMission as MissionSurvelliance).routes[i].missionItems[j].koordinat.Lat * 1e7);
+                        int lng = (int)((currentMission as MissionSurvelliance).routes[i].missionItems[j].koordinat.Lng * 1e7);
+                        float alt = (float)(currentMission as MissionSurvelliance).routes[i].missionItems[j].altitude;
 
-                    SendPacket.send_mavlink_mission_item_int_t_tcp(tcpClient,
-                                                                   0, 0, 0, 0,
-                                                                   lat, lng, alt,
-                                                                   (ushort)j,
-                                                                   MAVLink.MAV_CMD.WAYPOINT,
-                                                                   1, 1,
-                                                                   MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
-                                                                   MAVLink.MAV_MISSION_TYPE.MISSION);
+                        SendPacket.send_mavlink_mission_item_int_t_tcp(tcpClient,
+                                                                       0, 0, 0, 0,
+                                                                       lat, lng, alt,
+                                                                       (ushort)j,
+                                                                       MAVLink.MAV_CMD.WAYPOINT,
+                                                                       1, 1,
+                                                                       MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
+                                                                       MAVLink.MAV_MISSION_TYPE.MISSION);
+                    }
+                }
+                catch
+                {
+
                 }
             }
-            currentMission.tcpClients[i].Close();
+            //currentMission.tcpClients[i].Close();
             Thread.Sleep(1000);
             
             //
@@ -239,8 +276,57 @@ namespace SwarmController.Models.Swarm
 
         public void flyDrones()
         {
+            for (int i = 0; i < currentMission.numberOfDronesInMission; i++)
+            {
+                int k = i;
+                Thread thread = new Thread(() => flyDrone(allDrones[k]));
+                thread.Start();
+            }
+        }
+
+        public void flyDrone(Drone drone)
+        {
+            //TcpClient tcpClient = new TcpClient(localhost, drone.port);
+
+            //TcpClient tcpClient = currentMission.tcpClients[drone.droneID];
+
+            TcpClient tcpClient = drone.tcpClient;
+
+            // guided'a al
+            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+                                                       89,
+                                                       4,
+                                                       0, 0, 0, 0, 0,
+                                                       MAVLink.MAV_CMD.DO_SET_MODE);
+            Thread.Sleep(100);
+
+            // arm
+            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+                                                       1,
+                                                       1,
+                                                       0, 0, 0, 0, 0,
+                                                       MAVLink.MAV_CMD.COMPONENT_ARM_DISARM);
+            Thread.Sleep(100);
+
+            Debug.WriteLine("GAPATHH!!");
+            // takeoff
+            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+                                                       0, 1, 0, 0, 0, 0,
+                                                       10,
+                                                       MAVLink.MAV_CMD.TAKEOFF);
+            Thread.Sleep(10000); // 10 sec
+
+            // auto
+            // guided'a al
+            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+                                                       89,
+                                                       3,
+                                                       0, 0, 0, 0, 0,
+                                                       MAVLink.MAV_CMD.DO_SET_MODE);
 
         }
+
+        
 
     }
 }

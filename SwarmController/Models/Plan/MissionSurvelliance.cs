@@ -25,6 +25,7 @@ namespace SwarmController.Models.Plan
             routes = new List<Route>();
             drones = new List<Drone>();
             tcpClients = new List<TcpClient>();
+            assignedDronePorts = new List<int>();
         }
 
         public void createRoutes()
