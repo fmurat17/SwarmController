@@ -104,7 +104,8 @@ namespace SwarmController
         private void mapView_Loaded(object sender, RoutedEventArgs e)
         {
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
-            mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
+            //mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
+            mapView.MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;
             mapView.MinZoom = 1;
             mapView.MaxZoom = 24;
             mapView.Zoom = 2;
