@@ -66,6 +66,19 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        private bool _availability;
+        public bool availability
+        {
+            get
+            {
+                return _availability;
+            }
+            set
+            {
+                _availability = value;
+            }
+        }
+
         public Drone(int port, int missionID)
         {
             droneMarker = new GMapMarker(new PointLatLng(0, 0));
@@ -80,6 +93,7 @@ namespace SwarmController.Models.Swarm
             this.roll       = 0;
             this.yaw        = 0;
             this.pitch      = 0;
+            this.availability = true;
 
             tcpClient = new TcpClient();
             tcpClient.Connect("127.0.0.1", port);

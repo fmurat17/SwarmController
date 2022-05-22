@@ -59,7 +59,7 @@ namespace SwarmController.Models.Plan
 
             Route route2 = new Route();
             List<PointLatLng> gMapRoutePoints2 = new List<PointLatLng>();
-            PointLatLng pointLatLng2 = new PointLatLng(-35.3629110, 149.1613340);
+            PointLatLng pointLatLng2 = new PointLatLng(-35.3596912, 149.1642308);
             MissionItem missionItem2 = new MissionItem();
             GMapMarker gmapMarker2 = new GMapMarker(pointLatLng2);
             gmapMarker2.Shape = new MissionItemMarker();
@@ -77,7 +77,7 @@ namespace SwarmController.Models.Plan
 
             Route route3 = new Route();
             List<PointLatLng> gMapRoutePoints3 = new List<PointLatLng>();
-            PointLatLng pointLatLng3 = new PointLatLng(-35.3629110, 149.1613340);
+            PointLatLng pointLatLng3 = new PointLatLng(-35.3621411, 149.1707969);
             MissionItem missionItem3 = new MissionItem();
             GMapMarker gmapMarker3 = new GMapMarker(pointLatLng3);
             gmapMarker3.Shape = new MissionItemMarker();

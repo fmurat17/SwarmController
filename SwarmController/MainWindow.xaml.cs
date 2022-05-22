@@ -96,7 +96,15 @@ namespace SwarmController
 
                     mapView.Markers.Add(drone.droneMarker);
                 }));
-                
+
+                //Dispatcher.Invoke(new Action(() => {
+                //    mapView.Markers.Remove(drone.droneMarker);
+
+                //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
+
+                //    mapView.Markers.Add(drone.droneMarker);
+                //}));
+
                 Thread.Sleep(1000);
             }
         }
@@ -204,6 +212,24 @@ namespace SwarmController
 
             tb_Lat.Text = Math.Round(lat, 6).ToString();
             tb_Lng.Text = Math.Round(lng, 6).ToString();
+        }
+
+        private void btn_close63_Click(object sender, RoutedEventArgs e)
+        {
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5763);
+            drone.availability = false;
+        }
+
+        private void btn_close73_Click(object sender, RoutedEventArgs e)
+        {
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5773);
+            drone.availability = false;
+        }
+
+        private void btn_close83_Click(object sender, RoutedEventArgs e)
+        {
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5783);
+            drone.availability = false;
         }
     }
 }

@@ -39,6 +39,9 @@
         <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="110,17,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
         <TextBlock x:Name="tb_Lat" HorizontalAlignment="Left" Margin="42,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_Lng" HorizontalAlignment="Left" Margin="145,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_close63" Content="Close 5763" HorizontalAlignment="Left" Margin="16,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click"/>
+        <Button x:Name="btn_close73" Content="Close 5773" HorizontalAlignment="Left" Margin="135,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click"/>
+        <Button x:Name="btn_close83" Content="Close 5783" HorizontalAlignment="Left" Margin="259,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click"/>
 
     </Grid>
 </Window>

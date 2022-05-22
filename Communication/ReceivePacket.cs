@@ -28,12 +28,15 @@ namespace Haberlesme
             while (true)
             {
                 var packet = mavparse.ReadPacket(stm);
-                //Console.WriteLine("Received 1: {0}", packet);
-                if (packet.msgtypename == msgtypename)
+                if(packet != null)
                 {
-                    Console.WriteLine("GOTCHA!");
-                    Console.WriteLine(packet);
-                    return true;
+                    //Console.WriteLine("Received 1: {0}", packet);
+                    if (packet.msgtypename == msgtypename)
+                    {
+                        Console.WriteLine("GOTCHA!");
+                        Console.WriteLine(packet);
+                        return true;
+                    }
                 }
             }
         }

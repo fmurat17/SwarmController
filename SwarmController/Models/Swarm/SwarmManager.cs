@@ -103,38 +103,58 @@ namespace SwarmController.Models.Swarm
                                                        MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
                                                        );
 
-
-            while (true)
+            //int hbCounter = 0; // heartbeat counter
+            //int timeCounter = 0;
+            while (true && drone.availability)
             {
                 var packet = ReceivePacket.ReceieveTCPPackets(tcpClient);
+                //if (timeCounter == 24 && hbCounter == 0)
+                //{
+                //    Debug.WriteLine($"port {drone.port} is closed!");
+                //    return;
+                //}
+                //else
+                //{
+                //    timeCounter = 0;
+                //}
+
+                //if (timeCounter == 4)
+                //{
+                //    hbCounter = 0;
+                //}
 
                 try
                 {
-                    switch (packet.msgtypename)
+                    if (packet != null)
                     {
-                        case "HEARTBEAT":
-                            break;
-                        case "ATTITUDE":
-                            MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
-                            drone.roll = attitude.roll;
-                            drone.yaw = attitude.yaw;
-                            drone.pitch = attitude.pitch;
-                            break;
-                        case "GLOBAL_POSITION_INT":
-                            MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
-                            drone.lat = pos.lat / 1e7;
-                            drone.lng = pos.lon / 1e7;
-                            break;
-                    }
+                        Debug.WriteLine($"{drone.port} -> {packet}");
 
-                    Debug.WriteLine($"{drone.port} -> {packet}");
+                        switch (packet.msgtypename)
+                        {
+                            case "HEARTBEAT":
+                                //hbCounter++;
+                                break;
+                            case "ATTITUDE":
+                                MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
+                                drone.roll = attitude.roll;
+                                drone.yaw = attitude.yaw;
+                                drone.pitch = attitude.pitch;
+                                break;
+                            case "GLOBAL_POSITION_INT":
+                                MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
+                                drone.lat = pos.lat / 1e7;
+                                drone.lng = pos.lon / 1e7;
+                                break;
+                        }
+                    }
                 }
                 catch
                 {
                     Debug.WriteLine("ListenDrone -> error");
                 }
 
-                
+                //timeCounter++;
+                Thread.Sleep(200);
             }
         }
 
