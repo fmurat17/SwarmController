@@ -19,7 +19,8 @@
         <gmaps:GMapControl x:Name="mapView"
                            Grid.Row="1"
                            Loaded="mapView_Loaded"
-                           MouseLeftButtonUp="mapView_MouseLeftButtonUp"/>
+                           MouseLeftButtonUp="mapView_MouseLeftButtonUp"
+                           MouseMove="mapView_MouseMove"/>
 
         <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
                 Margin="20"
@@ -34,6 +35,10 @@
                 Click="btn_StartMission_Click"/>
         <Button x:Name="btn_CreateDrones" Content="Create Drones" HorizontalAlignment="Left" Margin="253,20,0,0" VerticalAlignment="Top" Width="80"
                 Click="btn_CreateDrones_Click"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="10,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Lat:" VerticalAlignment="Top"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="110,17,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="tb_Lat" HorizontalAlignment="Left" Margin="42,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_Lng" HorizontalAlignment="Left" Margin="145,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -195,6 +195,16 @@ namespace SwarmController
             bashProcess.Start();
             bashProcess.WaitForExit();
         }
+
+        private void mapView_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(mapView);
+            double lat = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lat;
+            double lng = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lng;
+
+            tb_Lat.Text = Math.Round(lat, 6).ToString();
+            tb_Lng.Text = Math.Round(lng, 6).ToString();
+        }
     }
 }
 
@@ -204,7 +214,7 @@ namespace SwarmController
 //oluşturulan plan dronelara dağıtılsın ve yüklensim ++
 //drone'ları dinle ++
 //drone'ları uçur ++
-//begininvoke yerine invoke kullan, güncelleme hızını artır
+//begininvoke yerine invoke kullan, güncelleme hızını artır ++ begininvoke devamke şimdilik
 //optimize edilecek bir şey varsa optimize et
 //bağlantı kes ve yeni rota oluşturup gönder
 //sm.startMission(); parametre olarak görevi almalı
