@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using SwarmController.Models.Plan;
 
 namespace SwarmController.Models.Swarm
 {
@@ -66,6 +67,19 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        private bool _isClosedForever;
+        public bool isClosedForever
+        {
+            get
+            {
+                return _isClosedForever;
+            }
+            set
+            {
+                _isClosedForever = value;
+            }
+        }
+
         private bool _availability;
         public bool availability
         {
@@ -76,6 +90,13 @@ namespace SwarmController.Models.Swarm
             set
             {
                 _availability = value;
+                if(_availability == false && isClosedForever)
+                {
+                    //PlanController pC = PlanController.getPlanController();
+                    //(pC.allMissions[missionID] as MissionSurvelliance).ReAssignDrone(droneID);
+                    SwarmManager sM = SwarmManager.getSwarmManager();
+                    sM.startMissionForOneDrone(this);
+                }
             }
         }
 
@@ -94,6 +115,7 @@ namespace SwarmController.Models.Swarm
             this.yaw        = 0;
             this.pitch      = 0;
             this.availability = true;
+            this.isClosedForever = false;
 
             tcpClient = new TcpClient();
             tcpClient.Connect("127.0.0.1", port);

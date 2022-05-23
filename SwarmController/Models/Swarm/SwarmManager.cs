@@ -105,7 +105,7 @@ namespace SwarmController.Models.Swarm
 
             //int hbCounter = 0; // heartbeat counter
             //int timeCounter = 0;
-            while (true && drone.availability)
+            while (drone.availability)
             {
                 var packet = ReceivePacket.ReceieveTCPPackets(tcpClient);
                 //if (timeCounter == 24 && hbCounter == 0)
@@ -127,7 +127,7 @@ namespace SwarmController.Models.Swarm
                 {
                     if (packet != null)
                     {
-                        Debug.WriteLine($"{drone.port} -> {packet}");
+                        //Debug.WriteLine($"{drone.port} -> {packet}");
 
                         switch (packet.msgtypename)
                         {
@@ -154,7 +154,7 @@ namespace SwarmController.Models.Swarm
                 }
 
                 //timeCounter++;
-                Thread.Sleep(200);
+                //Thread.Sleep(100);
             }
         }
 
@@ -205,6 +205,44 @@ namespace SwarmController.Models.Swarm
             flyDrones();
         }
 
+        public void startMissionForOneDrone(Drone drone)
+        {
+            ReAssignDrone(drone);
+            uploadMissionToOneDrone(drone);
+            flyOneDrone(drone);
+        }
+
+        public void ReAssignDrone(Drone closedDrone)
+        {
+            //SwarmManager sM = SwarmManager.getSwarmManager();
+            PlanController pC = PlanController.getPlanController();
+
+            Drone newDrone = null;
+
+            foreach (Drone drone in allDrones)
+            {
+                if (drone.isClosedForever == false && drone.availability == true)
+                {
+                    newDrone = drone;
+                    break;
+                }
+            }
+
+            MissionSurvelliance mission = (MissionSurvelliance)pC.allMissions[closedDrone.missionID];
+
+            newDrone.missionID = closedDrone.missionID;
+            mission.routes.Add(mission.routes[closedDrone.droneID]);
+            mission.drones.Add(newDrone);
+            mission.assignedDronePorts.Add(newDrone.port);
+            //mission.numberOfDronesInMission++; // bi şeye etki etmeyebilir şimdilik
+        }
+
+        public void uploadMissionToOneDrone(Drone closedDrone)
+        {
+            Thread uploadMissionToOneDroneThread = new Thread(() => uploadMissionToOneDrone(closedDrone));
+            uploadMissionToOneDroneThread.Start();
+        }
+
         public void assignDrones()
         {
             int numberOfDronesInMission = currentMission.numberOfDronesInMission;
@@ -217,6 +255,7 @@ namespace SwarmController.Models.Swarm
                 if (allDrones[p].missionID == -1)
                 {
                     allDrones[p].missionID = missionID;
+                    allDrones[p].availability = false;
                     currentMission.assignedDronePorts.Add(port);
                     //TcpClient tcpClient = new TcpClient();
                     //currentMission.tcpClients.Add(tcpClient);
@@ -235,12 +274,65 @@ namespace SwarmController.Models.Swarm
             //(currentMission as MissionSurvelliance).uploadMissionToDrones();
 
             //for(int i = 0; i < currentMission.assignedDronePorts.Count; i++)
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < currentMission.numberOfDronesInMission; i++)
             {
                 int k = i; // böyle yapmazsak i pass by reference olmuş oluyor ve içeride değeri değişiyor
                 Thread uploadMissionThread = new Thread(() => uploadMission(k));
                 uploadMissionThread.Start();
             }
+        }
+
+        public void uploadMissionToOneDroneThread(Drone drone)
+        {
+            PlanController pC = PlanController.getPlanController();
+
+            int missionId = drone.missionID;
+            int port = drone.port;
+            TcpClient tcpClient = drone.tcpClient;
+
+            // first clean the mission in drone
+            SendPacket.send_mission_clear_all_tcp(tcpClient,
+                                                  MAVLink.MAV_MISSION_TYPE.MISSION);
+
+            //wait a bit
+            Thread.Sleep(300);
+
+            Route route = ((MissionSurvelliance)pC.allMissions[drone.missionID]).routes.Last();
+            int numberOfMissionItems = route.gMapRoute.Points.Count;
+            Debug.WriteLine($"mission_item: {numberOfMissionItems}, {port}");
+            SendPacket.send_mavlink_mission_count_t_tcp(tcpClient,
+                                                        numberOfMissionItems,
+                                                        MAVLink.MAV_MISSION_TYPE.MISSION);
+
+            for (int j = 0; j < numberOfMissionItems; j++)
+            {
+                Debug.WriteLine($"{j}, {port}");
+                try
+                {
+                    if (ReceivePacket.ReceiveTCPPacket(tcpClient, "MISSION_REQUEST"))
+                    {
+                        int lat = (int)(route.missionItems[j].koordinat.Lat * 1e7);
+                        int lng = (int)(route.missionItems[j].koordinat.Lng * 1e7);
+                        float alt = (float)route.missionItems[j].altitude;
+
+                        SendPacket.send_mavlink_mission_item_int_t_tcp(tcpClient,
+                                                                       0, 0, 0, 0,
+                                                                       lat, lng, alt,
+                                                                       (ushort)j,
+                                                                       MAVLink.MAV_CMD.WAYPOINT,
+                                                                       1, 1,
+                                                                       MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
+                                                                       MAVLink.MAV_MISSION_TYPE.MISSION);
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            //currentMission.tcpClients[i].Close();
+            Thread.Sleep(1000);
+
         }
 
         public void uploadMission(int i)
@@ -255,6 +347,13 @@ namespace SwarmController.Models.Swarm
             int port = currentMission.assignedDronePorts[i];
             Drone drone = getDroneByMissionIdAndPort(missionId, port);
             TcpClient tcpClient = drone.tcpClient;
+
+            // first clean the mission in drone
+            SendPacket.send_mission_clear_all_tcp(tcpClient,
+                                                  MAVLink.MAV_MISSION_TYPE.MISSION);
+
+            //wait a bit
+            Thread.Sleep(300);
 
             int numberOfMissionItems = (currentMission as MissionSurvelliance).routes[i].gMapRoute.Points.Count;
             Debug.WriteLine($"mission_item: {numberOfMissionItems}, {port}");
@@ -290,10 +389,15 @@ namespace SwarmController.Models.Swarm
             }
             //currentMission.tcpClients[i].Close();
             Thread.Sleep(1000);
-            
+
             //
         }
 
+        public void flyOneDrone(Drone drone)
+        {
+            Thread thread = new Thread(() => flyDrone(allDrones[drone.droneID]));
+            thread.Start();
+        }
         public void flyDrones()
         {
             for (int i = 0; i < currentMission.numberOfDronesInMission; i++)

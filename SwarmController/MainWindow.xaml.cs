@@ -63,14 +63,7 @@ namespace SwarmController
 
             for(int i = 0; i < totalNumberOfDrones; i++)
             {
-                //GMapMarker drone = new GMapMarker(new PointLatLng(0,0));
-                //drone.Shape = new DroneMarker();
-                //drone.Offset = new Point(-15, -15);
-
-                //sm.allDrones[i].droneMarker = drone;
-
                 mapView.Markers.Add(sm.allDrones[i].droneMarker);
-                //droneMarkers.Add(drone);
             }
         }
 
@@ -146,17 +139,17 @@ namespace SwarmController
 
                 if (surveillanceClickCounter == 1)
                 {
-                    ms.topLeftCorner = coords;
-                    addLog("topLeftCorner selected");
+                    ms.firstPoint = coords;
+                    addLog("first point selected");
                 }
                 else
                 {
-                    ms.bottomUpCorner = coords;
-                    ms.numberOfDronesInMission = 3;
+                    ms.secondPoint = coords;
+                    ms.numberOfDronesInMission = 2;
                     //pc.currentMission = ms;
                     sm.currentMission = ms;
                     pc.allMissions.Add(ms);
-                    addLog("bottomUpCorner selected");
+                    addLog("second point selected");
                     ms.createRoutes();
 
                     surveillanceClickCounter = 0;
@@ -173,7 +166,7 @@ namespace SwarmController
             clickFunction = ClickFunction.CreateMission;
             corners = new List<PointLatLng>();
             ms = new MissionSurvelliance(missionIDCounter++);
-            MessageBox.Show("Choose TopLeft and BottomRight positions of field!");
+            MessageBox.Show("Mark fields to watch");
         }
 
         public void addLog(string log_string)
@@ -217,18 +210,21 @@ namespace SwarmController
         private void btn_close63_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5763);
+            drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close73_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5773);
+            drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close83_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5783);
+            drone.isClosedForever = true;
             drone.availability = false;
         }
     }
