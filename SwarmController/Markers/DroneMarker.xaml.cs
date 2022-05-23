@@ -20,9 +20,10 @@ namespace SwarmController.Markers
     /// </summary>
     public partial class DroneMarker : UserControl
     {
-        public DroneMarker()
+        public DroneMarker(int p)
         {
             InitializeComponent();
+            port.Text = p.ToString();
         }
     }
 }

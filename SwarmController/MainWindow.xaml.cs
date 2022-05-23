@@ -81,7 +81,16 @@ namespace SwarmController
         {
             while (true)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                //Dispatcher.BeginInvoke(new Action(() =>
+                //{
+                //    mapView.Markers.Remove(drone.droneMarker);
+
+                //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
+
+                //    mapView.Markers.Add(drone.droneMarker);
+                //}));
+
+                Dispatcher.Invoke(new Action(() =>
                 {
                     mapView.Markers.Remove(drone.droneMarker);
 
@@ -90,20 +99,13 @@ namespace SwarmController
                     mapView.Markers.Add(drone.droneMarker);
                 }));
 
-                //Dispatcher.Invoke(new Action(() => {
-                //    mapView.Markers.Remove(drone.droneMarker);
-
-                //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
-
-                //    mapView.Markers.Add(drone.droneMarker);
-                //}));
-
                 Thread.Sleep(1000);
             }
         }
 
         private void mapView_Loaded(object sender, RoutedEventArgs e)
         {
+            //mapView.CacheLocation = @"C:\Users\User\AppData\Local\GMap.NET";
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             //mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
             mapView.MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;

@@ -103,7 +103,7 @@ namespace SwarmController.Models.Swarm
         public Drone(int port, int missionID)
         {
             droneMarker = new GMapMarker(new PointLatLng(0, 0));
-            droneMarker.Shape = new DroneMarker();
+            droneMarker.Shape = new DroneMarker(port);
             droneMarker.Offset = new Point(-15, -15);
 
             this.port       = port;
