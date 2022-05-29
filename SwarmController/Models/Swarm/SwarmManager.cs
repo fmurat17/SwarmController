@@ -27,6 +27,7 @@ namespace SwarmController.Models.Swarm
         public string localhost = "127.0.0.1";
         public MissionBase currentMission = null;
         public int totalNumberOfDrones = 3;
+        public int availableNumberOfDrones = 0;
 
         // dict<port, missionID> -1 = available, others = assigned to a mission
         //public Dictionary<int, int> allDrones = new Dictionary<int, int>();
@@ -210,7 +211,22 @@ namespace SwarmController.Models.Swarm
 
         public void startMission()
         {
+
             assignDrones();
+
+            bool readyFlag = true;
+            // Check if all drones are connected and ready
+            foreach(Drone drone in currentMission.drones)
+            {
+                if (!drone.isConnected)
+                {
+                    Debug.WriteLine($"Drone {drone.droneID} is not ready!");
+                    readyFlag = false;
+                }
+            }
+
+            if (!readyFlag) return;
+
             uploadMissionToDrones();
             flyDrones();
         }
@@ -276,6 +292,7 @@ namespace SwarmController.Models.Swarm
                 {
                     allDrones[p].missionID = missionID;
                     //allDrones[p].availability = false;
+                    currentMission.drones.Add(allDrones[p]);
                     currentMission.assignedDronePorts.Add(port);
                     //TcpClient tcpClient = new TcpClient();
                     //currentMission.tcpClients.Add(tcpClient);

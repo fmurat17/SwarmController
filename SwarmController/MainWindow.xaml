@@ -42,6 +42,8 @@
         <Button x:Name="btn_close63" Content="Close 5763" HorizontalAlignment="Left" Margin="16,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click"/>
         <Button x:Name="btn_close73" Content="Close 5773" HorizontalAlignment="Left" Margin="135,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click"/>
         <Button x:Name="btn_close83" Content="Close 5783" HorizontalAlignment="Left" Margin="259,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click"/>
+        <TextBox x:Name="tb_numberOfDronesInMission" HorizontalAlignment="Left" Height="23" Margin="147,75,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="20,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="# of Drones in Mission"/><Run Text=":"/></TextBlock>
 
     </Grid>
 </Window>

@@ -16,7 +16,29 @@ namespace SwarmController.Models.Swarm
     {
         public int port { get; set; }
         public TcpClient tcpClient { get; set; }
-        public int missionID { get; set; }
+
+        private int _missionID;
+        public int missionID
+        {
+            get
+            {
+                return _missionID;
+            }
+            set
+            {
+                _missionID = value;
+
+                SwarmManager sM = SwarmManager.getSwarmManager();
+                if (_missionID == -1)
+                {
+                    sM.availableNumberOfDrones++;
+                }
+                else
+                {
+                    sM.availableNumberOfDrones--;
+                }
+            }
+        }
 
         private double _lat;
         public double lat
@@ -100,7 +122,7 @@ namespace SwarmController.Models.Swarm
             }
         }
 
-        public bool _isConnected;
+        private bool _isConnected;
         public bool isConnected
         {
             get
@@ -140,7 +162,7 @@ namespace SwarmController.Models.Swarm
             }
             catch
             {
-
+                isConnected = false;
             }
         }
     }

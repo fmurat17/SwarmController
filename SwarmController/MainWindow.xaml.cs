@@ -39,6 +39,8 @@ namespace SwarmController
         public LogViewModel logViewModel = new LogViewModel();
         public List<GMapMarker> droneMarkers = new List<GMapMarker>();
 
+        public int desiredNumberOfDronesInMission = 0;
+
         SwarmManager sm = SwarmManager.getSwarmManager();
         PlanController pc = PlanController.getPlanController();
 
@@ -162,6 +164,14 @@ namespace SwarmController
 
         private void btn_Surveillance_Click(object sender, RoutedEventArgs e)
         {
+            if(int.Parse(tb_numberOfDronesInMission.Text.ToString()) > sm.availableNumberOfDrones)
+            {
+                MessageBox.Show($"There is only {sm.availableNumberOfDrones} drones available!",
+                                "Mission Creation Failed");
+
+                return;
+            }
+
             clickFunction = ClickFunction.CreateMissionSurveillance;
             ms = new MissionSurvelliance(missionIDCounter++);
             MessageBox.Show("Mark fields to watch");
