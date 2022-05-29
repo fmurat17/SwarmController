@@ -152,7 +152,7 @@ namespace SwarmController.Models.Swarm
                                 MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
                                 drone.lat = pos.lat / 1e7;
                                 drone.lng = pos.lon / 1e7;
-                                Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
+                                //Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
                                 break;
                         }
                     }
@@ -218,6 +218,11 @@ namespace SwarmController.Models.Swarm
         public void startMissionForOneDrone(Drone drone)
         {
             Drone newDrone = ReAssignDrone(drone); // closed drone as parameter
+            if(newDrone == null)
+            {
+                Debug.WriteLine("There is not enough available drone to re-assign mission!");
+                return;
+            }
             uploadMissionToOneDrone(newDrone); // new drone as parameter
             flyOneDrone(newDrone); // new drone as parameter
         }
@@ -237,6 +242,8 @@ namespace SwarmController.Models.Swarm
                     break;
                 }
             }
+
+            if (newDrone == null) return null;
 
             MissionSurvelliance mission = (MissionSurvelliance)pC.allMissions[closedDrone.missionID];
 
