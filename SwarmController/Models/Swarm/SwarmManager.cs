@@ -62,8 +62,16 @@ namespace SwarmController.Models.Swarm
             for(int i = 0; i < this.allDrones.Count; i++)
             {
                 int k = i;
-                Thread thread = new Thread(() => ListenDrone(allDrones[k]));
-                thread.Start();
+                Drone drone = allDrones[k];
+                if (drone.isConnected)
+                {
+                    Thread thread = new Thread(() => ListenDrone(drone));
+                    thread.Start();
+                }
+                else
+                {
+                    Debug.WriteLine($"Drone with port {drone.port} is not connected!");
+                }
             }
         }
 

@@ -9,6 +9,7 @@ namespace SwarmController.Enums
     public enum ClickFunction
     {
         Select,
-        CreateMission
+        CreateMissionSurveillance,
+        CreateMissionKamikaze
     }
 }

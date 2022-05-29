@@ -120,7 +120,7 @@ namespace SwarmController
 
         private void mapView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(clickFunction == ClickFunction.CreateMission)
+            if(clickFunction == ClickFunction.CreateMissionSurveillance)
             {
                 Point mousePos = e.GetPosition(mapView);
                 double lat = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lat;
@@ -129,8 +129,6 @@ namespace SwarmController
                 Debug.WriteLine($"lat: {lat}, lng: {lng}");
 
                 surveillanceClickCounter++;
-
-                corners.Add(coords);
 
                 MissionItem missionItem = new MissionItem();
                 GMapMarker gmapMarker = new GMapMarker(coords);
@@ -155,7 +153,6 @@ namespace SwarmController
                     ms.createRoutes();
 
                     surveillanceClickCounter = 0;
-                    corners.Clear();
                     clickFunction = ClickFunction.Select;
 
                 }
@@ -165,8 +162,7 @@ namespace SwarmController
 
         private void btn_Surveillance_Click(object sender, RoutedEventArgs e)
         {
-            clickFunction = ClickFunction.CreateMission;
-            corners = new List<PointLatLng>();
+            clickFunction = ClickFunction.CreateMissionSurveillance;
             ms = new MissionSurvelliance(missionIDCounter++);
             MessageBox.Show("Mark fields to watch");
         }

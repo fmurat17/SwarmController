@@ -100,6 +100,19 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        public bool _isConnected;
+        public bool isConnected
+        {
+            get
+            {
+                return _isConnected;
+            }
+            set
+            {
+                _isConnected = value;
+            }
+        }
+
         public Drone(int port, int missionID)
         {
             droneMarker = new GMapMarker(new PointLatLng(0, 0));
@@ -116,9 +129,19 @@ namespace SwarmController.Models.Swarm
             this.pitch      = 0;
             this.availability = true;
             this.isClosedForever = false;
+            this.isConnected = false;
 
-            tcpClient = new TcpClient();
-            tcpClient.Connect("127.0.0.1", port);
+            try
+            {
+                tcpClient = new TcpClient();
+                tcpClient.Connect("127.0.0.1", port);
+
+                isConnected = true;
+            }
+            catch
+            {
+
+            }
         }
     }
 

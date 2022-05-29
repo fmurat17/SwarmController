@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SwarmController.Markers"
              mc:Ignorable="d">
     <Grid>
-        <Image Source="../Resources/drone.png" Width="30" Height="30"/>
+        <Image Source="../Resources/drone.png" Width="50" Height="50"/>
         <TextBlock x:Name="port" Text="0" HorizontalAlignment="Left" Margin="12,-15,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

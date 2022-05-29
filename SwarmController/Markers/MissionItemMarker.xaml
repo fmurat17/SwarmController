@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SwarmController.Markers"
              mc:Ignorable="d">
     <Grid>
-        <Image Source="../Resources/bigMarkerGreen.png" Width="20" Height="20"/>
+        <!--<Image Source="../Resources/bigMarkerGreen.png" Width="20" Height="20"/>-->
+        <Image Source="../Resources/cats.png" Width="30" Height="30"/>
     </Grid>
 </UserControl>
