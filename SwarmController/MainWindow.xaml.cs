@@ -34,7 +34,7 @@ namespace SwarmController
         public ClickFunction clickFunction;
         public int surveillanceClickCounter = 0;
         public List<PointLatLng> corners;
-        public MissionSurvelliance ms;
+        public MissionBase ms;
         public int missionIDCounter;
         public LogViewModel logViewModel = new LogViewModel();
         public List<GMapMarker> droneMarkers = new List<GMapMarker>();
@@ -139,24 +139,16 @@ namespace SwarmController
                 missionItem.marker = gmapMarker;
                 mapView.Markers.Add(gmapMarker);
 
-                if (surveillanceClickCounter == 1)
+                (ms as MissionSurvelliance).pointsToSurveillance.Add(coords);
+
+                if (surveillanceClickCounter == ms.numberOfDronesInMission)
                 {
-                    ms.firstPoint = coords;
-                    addLog("first point selected");
-                }
-                else
-                {
-                    ms.secondPoint = coords;
-                    ms.numberOfDronesInMission = 2;
-                    //pc.currentMission = ms;
                     sm.currentMission = ms;
                     pc.allMissions.Add(ms);
-                    addLog("second point selected");
-                    ms.createRoutes();
+                    (ms as MissionSurvelliance).createRoutes();
 
                     surveillanceClickCounter = 0;
                     clickFunction = ClickFunction.Select;
-
                 }
             }
 
@@ -164,7 +156,8 @@ namespace SwarmController
 
         private void btn_Surveillance_Click(object sender, RoutedEventArgs e)
         {
-            if(int.Parse(tb_numberOfDronesInMission.Text.ToString()) > sm.availableNumberOfDrones)
+            int desiredNumberOfDronesInTheMission = int.Parse(tb_numberOfDronesInMission.Text.ToString());
+            if(desiredNumberOfDronesInTheMission > sm.availableNumberOfDrones)
             {
                 MessageBox.Show($"There is only {sm.availableNumberOfDrones} drones available!",
                                 "Mission Creation Failed");
@@ -174,6 +167,7 @@ namespace SwarmController
 
             clickFunction = ClickFunction.CreateMissionSurveillance;
             ms = new MissionSurvelliance(missionIDCounter++);
+            ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
             MessageBox.Show("Mark fields to watch");
         }
 
@@ -217,21 +211,21 @@ namespace SwarmController
 
         private void btn_close63_Click(object sender, RoutedEventArgs e)
         {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5763);
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5760);
             drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close73_Click(object sender, RoutedEventArgs e)
         {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5773);
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5770);
             drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close83_Click(object sender, RoutedEventArgs e)
         {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5783);
+            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5780);
             drone.isClosedForever = true;
             drone.availability = false;
         }

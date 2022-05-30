@@ -12,8 +12,9 @@ namespace SwarmController.Models.Plan
     {
         public int missionID { get; set; }
         public int numberOfDronesInMission { get; set; }
-        public List<int> assignedDronePorts;
+        public List<int> assignedDronePorts { get; set; }
         //public List<TcpClient> tcpClients;
-        public List<Drone> drones;
+        public List<Drone> drones { get; set; }
+        public List<Route> routes { get; set; }
     }
 }

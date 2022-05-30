@@ -50,7 +50,7 @@ namespace SwarmController.Models.Swarm
         {
             for(int i = 0; i < totalNumberOfDrones; i++)
             {
-                int port = 5760 + i * 10 + 3;
+                int port = 5760 + i * 10 + 2;
                 Drone drone = new Drone(port, -1);
                 //drone.tcpClient = new TcpClient();
                 allDrones.Add(drone);
@@ -136,7 +136,7 @@ namespace SwarmController.Models.Swarm
                 {
                     if (packet != null)
                     {
-                        //Debug.WriteLine($"{drone.port} -> {packet}");
+                        Debug.WriteLine($"{drone.port} -> {packet}");
 
                         switch (packet.msgtypename)
                         {
@@ -287,7 +287,7 @@ namespace SwarmController.Models.Swarm
 
             for (int i = 0, p = 0; i < numberOfDronesInMission ; )
             {
-                int port = 5760 + (p * 10) + 3;
+                int port = 5760 + (p * 10) + 2;
                 if (allDrones[p].missionID == -1)
                 {
                     allDrones[p].missionID = missionID;
