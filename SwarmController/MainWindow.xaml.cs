@@ -179,7 +179,7 @@ namespace SwarmController
 
         private void btn_StartMission_Click(object sender, RoutedEventArgs e)
         {
-            sm.startMission();
+            sm.InitStartMission();
         }
 
         private void btn_CreateDrones_Click(object sender, RoutedEventArgs e)
@@ -213,21 +213,18 @@ namespace SwarmController
         private void btn_close63_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5760);
-            drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close73_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5770);
-            drone.isClosedForever = true;
             drone.availability = false;
         }
 
         private void btn_close83_Click(object sender, RoutedEventArgs e)
         {
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5780);
-            drone.isClosedForever = true;
             drone.availability = false;
         }
     }

@@ -89,16 +89,16 @@ namespace SwarmController.Models.Swarm
             }
         }
 
-        private bool _isClosedForever;
-        public bool isClosedForever
+        private int _droneIdInMission;
+        public int droneIdInMission
         {
             get
             {
-                return _isClosedForever;
+                return _droneIdInMission;
             }
             set
             {
-                _isClosedForever = value;
+                _droneIdInMission = value;
             }
         }
 
@@ -112,26 +112,13 @@ namespace SwarmController.Models.Swarm
             set
             {
                 _availability = value;
-                if(_availability == false && isClosedForever)
+                if(_availability == false)
                 {
                     //PlanController pC = PlanController.getPlanController();
                     //(pC.allMissions[missionID] as MissionSurvelliance).ReAssignDrone(droneID);
                     SwarmManager sM = SwarmManager.getSwarmManager();
                     sM.startMissionForOneDrone(this);
                 }
-            }
-        }
-
-        private bool _isConnected;
-        public bool isConnected
-        {
-            get
-            {
-                return _isConnected;
-            }
-            set
-            {
-                _isConnected = value;
             }
         }
 
@@ -149,20 +136,17 @@ namespace SwarmController.Models.Swarm
             this.roll       = 0;
             this.yaw        = 0;
             this.pitch      = 0;
-            this.availability = true;
-            this.isClosedForever = false;
-            this.isConnected = false;
 
             try
             {
                 tcpClient = new TcpClient();
                 tcpClient.Connect("127.0.0.1", port);
 
-                isConnected = true;
+                this.availability = true;
             }
             catch
             {
-                isConnected = false;
+                this.availability = false;
             }
         }
     }
