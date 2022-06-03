@@ -76,11 +76,6 @@ namespace SwarmController.Models.Swarm
             }
         }
 
-        public void InitListenAllDronesOfMission()
-        {
-
-        }
-
         public void ListenDrone(Drone drone)
         {
             //drone.tcpClient.Connect(localhost, drone.port);
@@ -105,12 +100,12 @@ namespace SwarmController.Models.Swarm
                                                        );
 
             // HEARTBEAT
-            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
-                                                       0,
-                                                       50000,
-                                                       0, 0, 0, 0, 0,
-                                                       MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
-                                                       );
+            //SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+            //                                           0,
+            //                                           50000,
+            //                                           0, 0, 0, 0, 0,
+            //                                           MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
+            //                                           );
 
             //int hbCounter = 0; // heartbeat counter
             //int timeCounter = 0;
@@ -136,7 +131,7 @@ namespace SwarmController.Models.Swarm
                 {
                     if (packet != null)
                     {
-                        Debug.WriteLine($"{drone.port} -> {packet}");
+                        //Debug.WriteLine($"{drone.port} -> {packet}");
 
                         switch (packet.msgtypename)
                         {
@@ -169,49 +164,8 @@ namespace SwarmController.Models.Swarm
             Debug.WriteLine("qwe");
         }
 
-        //public void ListenDrone(Drone drone)
-        //{
-        //    int current = 0;
-        //    int previous = 0;
-
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            current++;
-        //            if (previous + 1 != current)
-        //            {
-        //                drone.tcpClient.Connect(localhost, drone.port);
-        //                break;
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            Debug.WriteLine("Ports has not been opened yet!");
-        //            previous++;
-        //        }
-        //    }
-
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            var packet = ReceivePacket.ReceieveTCPPackets(drone.tcpClient);
-        //            if(packet.msgtypename == "GPS_GLOBAL_ORIGIN")
-        //            {
-        //                Debug.WriteLine(packet);
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            Debug.WriteLine("error!!");
-        //        }
-        //    }
-        //}
-
         public void startMission()
         {
-
             assignDrones();
 
             bool readyFlag = true;
@@ -491,3 +445,65 @@ namespace SwarmController.Models.Swarm
 
     }
 }
+
+
+//public void ListenDrone(Drone drone)
+//{
+//    int current = 0;
+//    int previous = 0;
+
+//    while (true)
+//    {
+//        try
+//        {
+//            current++;
+//            if (previous + 1 != current)
+//            {
+//                drone.tcpClient.Connect(localhost, drone.port);
+//                break;
+//            }
+//        }
+//        catch
+//        {
+//            Debug.WriteLine("Ports has not been opened yet!");
+//            previous++;
+//        }
+//    }
+
+//    while (true)
+//    {
+//        try
+//        {
+//            var packet = ReceivePacket.ReceieveTCPPackets(drone.tcpClient);
+//            if(packet.msgtypename == "GPS_GLOBAL_ORIGIN")
+//            {
+//                Debug.WriteLine(packet);
+//            }
+//        }
+//        catch
+//        {
+//            Debug.WriteLine("error!!");
+//        }
+//    }
+//}
+
+//while (drone.availability)
+//{
+//    var packet = ReceivePacket.ReceieveTCPPackets(tcpClient);
+//    //if (timeCounter == 24 && hbCounter == 0)
+//    //{
+//    //    Debug.WriteLine($"port {drone.port} is closed!");
+//    //    return;
+//    //}
+//    //else
+//    //{
+//    //    timeCounter = 0;
+//    //}
+
+//    //if (timeCounter == 4)
+//    //{
+//    //    hbCounter = 0;
+//    //}
+
+//    try
+//    {

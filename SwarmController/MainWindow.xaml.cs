@@ -54,7 +54,7 @@ namespace SwarmController
             sm.createDrones();
 
             createDroneMarkers();
-            UpdateAllDronesInMap();
+            InitUpdateAllDronesInMap();
 
             sm.InitListenAllDrones();
         }
@@ -69,39 +69,40 @@ namespace SwarmController
             }
         }
 
-        private void UpdateAllDronesInMap()
+        private void InitUpdateAllDronesInMap()
         {
-            for (int i = 0; i < sm.allDrones.Count; i++)
-            {
-                int k = i;
-                Thread thread = new Thread(() => updateDroneInMap(sm.allDrones[k]));
-                thread.Start();
-            }
+            Thread updateDronesInMap_Thread = new Thread(() => UpdateDronesInMapThread());
+            updateDronesInMap_Thread.Start();
         }
 
-        private void updateDroneInMap(Drone drone)
+        private void UpdateDronesInMapThread()
         {
             while (true)
             {
-                //Dispatcher.BeginInvoke(new Action(() =>
-                //{
-                //    mapView.Markers.Remove(drone.droneMarker);
-
-                //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
-
-                //    mapView.Markers.Add(drone.droneMarker);
-                //}));
-
-                Dispatcher.Invoke(new Action(() =>
+                for (int i = 0; i < sm.allDrones.Count; i++)
                 {
-                    mapView.Markers.Remove(drone.droneMarker);
+                    //Dispatcher.BeginInvoke(new Action(() =>
+                    //{
+                    //    mapView.Markers.Remove(drone.droneMarker);
 
-                    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
+                    //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
 
-                    mapView.Markers.Add(drone.droneMarker);
-                }));
+                    //    mapView.Markers.Add(drone.droneMarker);
+                    //}));
 
-                Thread.Sleep(1000);
+                    Drone drone = sm.allDrones[i];
+
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        mapView.Markers.Remove(drone.droneMarker);
+
+                        drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
+
+                        mapView.Markers.Add(drone.droneMarker);
+                    }));
+
+                }
+                Thread.Sleep(200);
             }
         }
 
