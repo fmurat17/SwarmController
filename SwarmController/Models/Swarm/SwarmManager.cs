@@ -161,8 +161,11 @@ namespace SwarmController.Models.Swarm
             drone.availability = false;
         }
 
-        public void InitStartMission()
+        public void InitStartMission(string missionName)
         {
+            PlanController pc = PlanController.getPlanController();
+            currentMission = pc.getMissionByName(missionName);
+
             Thread start_mission_thread = new Thread(() => StartMission());
             start_mission_thread.Start();
         }

@@ -27,5 +27,15 @@ namespace SwarmController.Models.Plan
 
         public List<Route> allRoutes = new List<Route>();
         public List<MissionBase> allMissions = new List<MissionBase>();
+
+        public MissionBase getMissionByName(string missionName)
+        {
+            foreach(MissionBase mission in allMissions)
+            {
+                if (mission.missionName == missionName) return mission;
+            }
+
+            return null;
+        }
     }
 }

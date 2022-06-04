@@ -146,7 +146,9 @@ namespace SwarmController
 
                 if (surveillanceClickCounter == ms.numberOfDronesInMission)
                 {
-                    missionNamesViewModel.missionNames.Add("SVR_" + tb_missionName.Text);
+                    string missionName = "SVR_" + tb_missionName.Text;
+                    ms.missionName = missionName;
+                    missionNamesViewModel.missionNames.Add(missionName);
 
                     sm.currentMission = ms;
                     pc.allMissions.Add(ms);
@@ -183,7 +185,7 @@ namespace SwarmController
 
         private void btn_StartMission_Click(object sender, RoutedEventArgs e)
         {
-            sm.InitStartMission();
+            sm.InitStartMission(cmb_missionNames.SelectedItem.ToString());
         }
 
         private void btn_CreateDrones_Click(object sender, RoutedEventArgs e)

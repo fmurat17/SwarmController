@@ -10,6 +10,7 @@ namespace SwarmController.Models.Plan
 {
     public class MissionBase
     {
+        public string missionName { get; set; }
         public int missionID { get; set; }
         public int droneIdInMissinCounter { get; set; }
         public int numberOfDronesInMission { get; set; } // kaldırılabilir
