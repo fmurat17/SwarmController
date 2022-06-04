@@ -14,14 +14,18 @@ namespace SwarmController.ViewModels
         public double pitch { get; set; }
         public double lat { get; set; }
         public double lng { get; set; }
+        public double alt { get; set; }
+        public string connectionColor { get; set; }
 
-        public DroneInfoCardViewModel(double roll, double yaw, double pitch, double lat, double lng)
+        public DroneInfoCardViewModel(double roll, double yaw, double pitch, double lat, double lng, double alt, string connectionColor)
         {
             this.roll = roll;
             this.yaw = yaw;
             this.pitch = pitch;
             this.lat = lat;
             this.lng = lng;
+            this.alt = alt;
+            this.connectionColor = connectionColor;
         }
         
     }

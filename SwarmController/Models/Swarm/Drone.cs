@@ -102,6 +102,19 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        private bool _isClosedForever;
+        public bool isClosedForever
+        {
+            get
+            {
+                return _isClosedForever;
+            }
+            set
+            {
+                _isClosedForever = value;
+            }
+        }
+
         private bool _availability;
         public bool availability
         {
@@ -112,7 +125,7 @@ namespace SwarmController.Models.Swarm
             set
             {
                 _availability = value;
-                if(_availability == false)
+                if(_availability == false && isClosedForever)
                 {
                     //PlanController pC = PlanController.getPlanController();
                     //(pC.allMissions[missionID] as MissionSurvelliance).ReAssignDrone(droneID);
@@ -121,6 +134,8 @@ namespace SwarmController.Models.Swarm
                 }
             }
         }
+
+
 
         public Drone(int port, int missionID)
         {
@@ -136,6 +151,7 @@ namespace SwarmController.Models.Swarm
             this.roll       = 0;
             this.yaw        = 0;
             this.pitch      = 0;
+            this.isClosedForever = false;
 
             try
             {

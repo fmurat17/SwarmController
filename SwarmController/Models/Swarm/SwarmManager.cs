@@ -144,6 +144,7 @@ namespace SwarmController.Models.Swarm
                                 MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
                                 drone.lat = Math.Round(pos.lat / 1e7, 6);
                                 drone.lng = Math.Round(pos.lon / 1e7, 6);
+                                drone.alt = pos.relative_alt / 1000.0;
                                 //Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
                                 break;
                         }
@@ -159,6 +160,7 @@ namespace SwarmController.Models.Swarm
             }
             Debug.WriteLine($"Connection lost with {drone.port}");
             drone.availability = false;
+            drone.isClosedForever = true;
         }
 
         public void InitStartMission(string missionName)

@@ -5,26 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SwarmController.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200" 
+             d:DesignHeight="140" d:DesignWidth="270"
              Background="White">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="4,10,0,0" TextWrapping="Wrap" Text="Roll" VerticalAlignment="Top" Height="15" Width="23"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4,25,0,0" TextWrapping="Wrap" Text="Yaw" VerticalAlignment="Top" Height="15" Width="23"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4,40,0,0" TextWrapping="Wrap" Text="Pitch" VerticalAlignment="Top" Height="15" Width="28"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4,60,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top" Height="15" Width="28"/>
-        <TextBlock HorizontalAlignment="Left" Margin="4,75,0,0" TextWrapping="Wrap" Text="Lng" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,34,0,0" TextWrapping="Wrap" Text="Roll" VerticalAlignment="Top" Height="15" Width="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,49,0,0" TextWrapping="Wrap" Text="Yaw" VerticalAlignment="Top" Height="15" Width="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,64,0,0" TextWrapping="Wrap" Text="Pitch" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,84,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,99,0,0" TextWrapping="Wrap" Text="Lng" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,114,0,0" TextWrapping="Wrap" Text="Alt" VerticalAlignment="Top" Height="15" Width="28"/>
 
-        <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="37,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="37,24,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="37,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_lat"   Text="{Binding lat}" HorizontalAlignment="Left" Margin="37,59,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_lng"   Text="{Binding lng}" HorizontalAlignment="Left" Margin="37,74,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="186,34,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="186,49,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="186,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_lat"   Text="{Binding lat}" HorizontalAlignment="Left" Margin="186,84,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_lng"   Text="{Binding lng}" HorizontalAlignment="Left" Margin="186,99,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_alt"   Text="{Binding alt}" HorizontalAlignment="Left" Margin="186,114,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
 
-        <Image Source="../Resources/Horizon_Background.bmp"
+        <!--<Image Source="../Resources/Horizon_Background.bmp"
                 Height="120"
-                Margin="0,70,0,0"/>
+                Margin="-68,5,68,10"/>-->
 
-        <Border Margin="6,85,8,15" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="50,50,50,50" RenderTransformOrigin="0.5,0.5">
+
+        <Border Margin="15,15,150,25" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="50,50,50,50" RenderTransformOrigin="0.5,0.5">
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -33,12 +36,13 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Border.RenderTransform>
-                <Border.Background>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/Horizon_GroundSky.bmp"/>
-                </Border.Background>
+            <Border.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/Horizon_GroundSky.bmp"/>
+            </Border.Background>
         </Border>
+        <Label Background="{Binding connectionColor}" Width="30" Height="30" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top"/>
 
-        
+
 
     </Grid>
 </UserControl>

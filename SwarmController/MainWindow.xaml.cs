@@ -70,7 +70,7 @@ namespace SwarmController
         {
             for(int i = 0; i < sm.totalNumberOfDrones; i++)
             {
-                droneInfoCardListViewModel.droneInfoList.Add(new DroneInfoCardViewModel(0,0,0,0,0));
+                droneInfoCardListViewModel.droneInfoList.Add(new DroneInfoCardViewModel(0,0,0,0,0,0,""));
             }
         }
 
@@ -107,11 +107,18 @@ namespace SwarmController
 
                     Drone drone = sm.allDrones[i];
 
+                    string connectionColor = "";
+
+                    if (drone.availability) connectionColor = "Green";
+                    else connectionColor = "Red";
+
                     DroneInfoCardViewModel droneInfoCard = new DroneInfoCardViewModel(drone.roll,
                                                                                       drone.yaw,
                                                                                       drone.pitch,
                                                                                       drone.lat,
-                                                                                      drone.lng);
+                                                                                      drone.lng,
+                                                                                      drone.alt,
+                                                                                      connectionColor);
 
 
                     Dispatcher.Invoke(new Action(() =>
