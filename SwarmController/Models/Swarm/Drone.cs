@@ -80,7 +80,7 @@ namespace SwarmController.Models.Swarm
         {
             get
             {
-                _droneID = (this.port - 5763) / 10;
+                _droneID = (this.port - 5762) / 10;
                 return _droneID;
             }
             set
@@ -148,6 +148,11 @@ namespace SwarmController.Models.Swarm
             {
                 this.availability = false;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"id: {droneID} - port {port}";
         }
     }
 
