@@ -16,8 +16,12 @@ namespace SwarmController.ViewModels
         public double lng { get; set; }
         public double alt { get; set; }
         public string connectionColor { get; set; }
+        public int port { get; set; }
 
-        public DroneInfoCardViewModel(double roll, double yaw, double pitch, double lat, double lng, double alt, string connectionColor)
+        public DroneInfoCardViewModel(double roll, double yaw, double pitch, 
+                                    double lat, double lng, double alt, 
+                                    string connectionColor,
+                                    int port)
         {
             this.roll = roll;
             this.yaw = yaw;
@@ -26,6 +30,7 @@ namespace SwarmController.ViewModels
             this.lng = lng;
             this.alt = alt;
             this.connectionColor = connectionColor;
+            this.port = port;
         }
         
     }

@@ -135,6 +135,20 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        private string _connectionColor;
+        public string connectionColor
+        {
+            get
+            {
+                if (this.availability) return "Green";
+                else return "Red";
+            }
+            set
+            {
+                _connectionColor = value;
+            }
+        }
+
 
 
         public Drone(int port, int missionID)

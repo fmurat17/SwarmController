@@ -8,6 +8,7 @@
              d:DesignHeight="140" d:DesignWidth="270"
              Background="White">
     <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="136,10,0,0" TextWrapping="Wrap" Text="Port" VerticalAlignment="Top" Height="15" Width="22"/>
         <TextBlock HorizontalAlignment="Left" Margin="136,34,0,0" TextWrapping="Wrap" Text="Roll" VerticalAlignment="Top" Height="15" Width="22"/>
         <TextBlock HorizontalAlignment="Left" Margin="136,49,0,0" TextWrapping="Wrap" Text="Yaw" VerticalAlignment="Top" Height="15" Width="22"/>
         <TextBlock HorizontalAlignment="Left" Margin="136,64,0,0" TextWrapping="Wrap" Text="Pitch" VerticalAlignment="Top" Height="15" Width="28"/>
@@ -15,6 +16,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="136,99,0,0" TextWrapping="Wrap" Text="Lng" VerticalAlignment="Top" Height="15" Width="28"/>
         <TextBlock HorizontalAlignment="Left" Margin="136,114,0,0" TextWrapping="Wrap" Text="Alt" VerticalAlignment="Top" Height="15" Width="28"/>
 
+        <TextBlock x:Name="tb_port"  Text="{Binding port}" HorizontalAlignment="Left" Margin="186,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="186,34,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="186,49,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="186,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
