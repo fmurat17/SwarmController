@@ -37,6 +37,7 @@ namespace SwarmController
         public MissionBase ms;
         public int missionIDCounter;
         public LogViewModel logViewModel = new LogViewModel();
+        public MissionNamesViewModel missionNamesViewModel = new MissionNamesViewModel();
         public List<GMapMarker> droneMarkers = new List<GMapMarker>();
 
         public int desiredNumberOfDronesInMission = 0;
@@ -48,6 +49,7 @@ namespace SwarmController
         {
             InitializeComponent();
             lv_Log.DataContext = logViewModel;
+            cmb_missionNames.DataContext = missionNamesViewModel;
 
             //btn_CreateDrones_Click(null, null);
 
@@ -144,6 +146,8 @@ namespace SwarmController
 
                 if (surveillanceClickCounter == ms.numberOfDronesInMission)
                 {
+                    missionNamesViewModel.missionNames.Add("SVR_" + tb_missionName.Text);
+
                     sm.currentMission = ms;
                     pc.allMissions.Add(ms);
                     (ms as MissionSurvelliance).createRoutes();
