@@ -140,8 +140,10 @@ namespace SwarmController.Models.Swarm
         {
             get
             {
-                if (this.availability) return "Green";
-                else return "Red";
+                if (this.availability) _connectionColor = "Green";
+                else _connectionColor = "Red";
+
+                return _connectionColor;
             }
             set
             {

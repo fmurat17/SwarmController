@@ -159,8 +159,8 @@ namespace SwarmController.Models.Swarm
                 //Thread.Sleep(100);
             }
             Debug.WriteLine($"Connection lost with {drone.port}");
-            drone.availability = false;
             drone.isClosedForever = true;
+            drone.availability = false;
         }
 
         public void InitStartMission(string missionName)
