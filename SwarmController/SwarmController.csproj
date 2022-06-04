@@ -100,9 +100,14 @@
       <DependentUpon>DroneMarker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Swarm\Drone.cs" />
+    <Compile Include="ViewModels\DroneInfoCardListViewModel.cs" />
+    <Compile Include="ViewModels\DroneInfoCardViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MissionNamesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\DroneInfoCard.xaml.cs">
+      <DependentUpon>DroneInfoCard.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Markers\MissionItemMarker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DroneInfoCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,7 +171,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Resource Include="Resources\Horizon_Background.bmp" />
+    <Resource Include="Resources\Horizon_GroundSky.bmp" />
+    <Resource Include="Resources\Maquette_Avion.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bigMarkerGreen.png" />

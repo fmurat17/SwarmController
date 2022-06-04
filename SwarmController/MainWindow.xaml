@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SwarmController"
+        xmlns:components="clr-namespace:SwarmController.Views"
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="180"/>
+            <RowDefinition Height="130"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
@@ -23,31 +25,50 @@
                            MouseMove="mapView_MouseMove"/>
 
         <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
-                Margin="16,87,0,0"
+                Margin="305,62,0,0"
                 Grid.Row="0"
                 Click="btn_Surveillance_Click"/>
 
-        <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="400" Height="150"
-                  Margin="0,0,0,20"
+        <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="400" Height="111"
                   Grid.Row="0"
                   ItemsSource="{Binding logList}"/>
         <Button x:Name="btn_StartMission" Content="Start Mission" HorizontalAlignment="Left" Margin="461,22,0,0" VerticalAlignment="Top" Width="76"
                 Click="btn_StartMission_Click"/>
-        <Button x:Name="btn_CreateDrones" Content="Create Drones" HorizontalAlignment="Left" Margin="365,135,0,0" VerticalAlignment="Top" Width="80"
+        <Button x:Name="btn_CreateDrones" Content="Create Drones" HorizontalAlignment="Left" Margin="243,91,0,0" VerticalAlignment="Top" Width="80"
                 Click="btn_CreateDrones_Click"/>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="10,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Lat:" VerticalAlignment="Top"/>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="110,17,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
-        <TextBlock x:Name="tb_Lat" HorizontalAlignment="Left" Margin="42,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_Lng" HorizontalAlignment="Left" Margin="145,17,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_close63" Content="Close 5763" HorizontalAlignment="Left" Margin="16,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click"/>
-        <Button x:Name="btn_close73" Content="Close 5773" HorizontalAlignment="Left" Margin="135,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click"/>
-        <Button x:Name="btn_close83" Content="Close 5783" HorizontalAlignment="Left" Margin="259,135,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="10,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Lat:" VerticalAlignment="Top"/>
+        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="110,17,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="tb_Lat" HorizontalAlignment="Left" Margin="42,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_Lng" HorizontalAlignment="Left" Margin="145,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_close63" Content="Close 5763" HorizontalAlignment="Left" Margin="16,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click"/>
+        <Button x:Name="btn_close73" Content="Close 5773" HorizontalAlignment="Left" Margin="90,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click"/>
+        <Button x:Name="btn_close83" Content="Close 5783" HorizontalAlignment="Left" Margin="164,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click"/>
         <TextBox x:Name="tb_numberOfDronesInMission" HorizontalAlignment="Left" Height="23" Margin="143,23,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="16,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="# of Drones in Mission"/><Run Text=":"/></TextBlock>
         <ComboBox x:Name="cmb_missionNames" HorizontalAlignment="Left" Margin="305,24,0,0" VerticalAlignment="Top" Width="120"
                   ItemsSource="{Binding missionNames}"/>
         <TextBox x:Name="tb_missionName" HorizontalAlignment="Left" Height="23" Margin="143,54,0,0" TextWrapping="Wrap" Text="fat" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="16,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Mission Name:"/>
+
+
+        <ScrollViewer
+            Grid.Row="2"
+            Margin="20 20 20 20"
+            VerticalScrollBarVisibility="Auto"
+            x:Name="sv_droneInfo">
+            <ItemsControl x:Name="droneInfoCard" ItemsSource="{Binding droneInfoList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <components:DroneInfoCard Margin="20" BorderThickness="2" BorderBrush="Black"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
 
     </Grid>
 </Window>

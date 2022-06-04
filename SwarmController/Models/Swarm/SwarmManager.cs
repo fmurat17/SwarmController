@@ -136,14 +136,14 @@ namespace SwarmController.Models.Swarm
                                 break;
                             case "ATTITUDE":
                                 MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
-                                drone.roll = attitude.roll;
-                                drone.yaw = attitude.yaw;
-                                drone.pitch = attitude.pitch;
+                                drone.roll  = Math.Round(attitude.roll  * 180 / Math.PI, 3);
+                                drone.yaw   = Math.Round(attitude.yaw   * 180 / Math.PI, 3);
+                                drone.pitch = Math.Round(attitude.pitch * 180 / Math.PI, 3);
                                 break;
                             case "GLOBAL_POSITION_INT":
                                 MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
-                                drone.lat = pos.lat / 1e7;
-                                drone.lng = pos.lon / 1e7;
+                                drone.lat = Math.Round(pos.lat / 1e7, 6);
+                                drone.lng = Math.Round(pos.lon / 1e7, 6);
                                 //Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
                                 break;
                         }

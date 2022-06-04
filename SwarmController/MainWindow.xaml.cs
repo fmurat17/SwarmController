@@ -38,6 +38,7 @@ namespace SwarmController
         public int missionIDCounter;
         public LogViewModel logViewModel = new LogViewModel();
         public MissionNamesViewModel missionNamesViewModel = new MissionNamesViewModel();
+        public DroneInfoCardListViewModel droneInfoCardListViewModel = new DroneInfoCardListViewModel();
         public List<GMapMarker> droneMarkers = new List<GMapMarker>();
 
         public int desiredNumberOfDronesInMission = 0;
@@ -48,17 +49,29 @@ namespace SwarmController
         public MainWindow()
         {
             InitializeComponent();
+
             lv_Log.DataContext = logViewModel;
             cmb_missionNames.DataContext = missionNamesViewModel;
+            droneInfoCard.DataContext = droneInfoCardListViewModel;
+            //sv_droneInfo.DataContext = droneInfoCardListViewModel;
 
             //btn_CreateDrones_Click(null, null);
 
+            createDronesViewModel();
             sm.createDrones();
 
             createDroneMarkers();
             InitUpdateAllDronesInMap();
 
             sm.InitListenAllDrones();
+        }
+
+        private void createDronesViewModel()
+        {
+            for(int i = 0; i < sm.totalNumberOfDrones; i++)
+            {
+                droneInfoCardListViewModel.droneInfoList.Add(new DroneInfoCardViewModel(0,0,0,0,0));
+            }
         }
 
         private void createDroneMarkers()
@@ -94,8 +107,18 @@ namespace SwarmController
 
                     Drone drone = sm.allDrones[i];
 
+                    DroneInfoCardViewModel droneInfoCard = new DroneInfoCardViewModel(drone.roll,
+                                                                                      drone.yaw,
+                                                                                      drone.pitch,
+                                                                                      drone.lat,
+                                                                                      drone.lng);
+
+
                     Dispatcher.Invoke(new Action(() =>
                     {
+                    
+                        droneInfoCardListViewModel.droneInfoList[i] = droneInfoCard;
+
                         mapView.Markers.Remove(drone.droneMarker);
 
                         drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
