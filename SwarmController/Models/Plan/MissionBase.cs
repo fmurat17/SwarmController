@@ -10,6 +10,7 @@ namespace SwarmController.Models.Plan
 {
     public class MissionBase
     {
+
         public string missionName { get; set; }
         public int missionID { get; set; }
         public int droneIdInMissinCounter { get; set; }
@@ -19,5 +20,16 @@ namespace SwarmController.Models.Plan
         //public List<TcpClient> tcpClients;
         public List<Drone> drones { get; set; }
         public List<Route> routes { get; set; }
+
+        public MissionBase()
+        {
+            missionName = "NaN";
+            missionID = -1;
+        }
+
+        public override string ToString()
+        {
+            return $"{missionID} - {missionName}";
+        }
     }
 }

@@ -70,7 +70,7 @@ namespace SwarmController
         {
             for(int i = 0; i < sm.totalNumberOfDrones; i++)
             {
-                droneInfoCardListViewModel.droneInfoList.Add(new DroneInfoCardViewModel(0,0,0,0,0,0,"",0));
+                droneInfoCardListViewModel.droneInfoList.Add(new DroneInfoCardViewModel(0,0,0,0,0,0,"",0,""));
             }
         }
 
@@ -106,6 +106,7 @@ namespace SwarmController
                     //}));
 
                     Drone drone = sm.allDrones[i];
+                    MissionBase mission = SwarmManager.getSwarmManager().getMissionByPort(drone.port);
 
                     DroneInfoCardViewModel droneInfoCard = new DroneInfoCardViewModel(drone.roll,
                                                                                       drone.yaw,
@@ -114,7 +115,8 @@ namespace SwarmController
                                                                                       drone.lng,
                                                                                       drone.alt,
                                                                                       drone.connectionColor,
-                                                                                      drone.port);
+                                                                                      drone.port,
+                                                                                      mission.ToString());
 
 
                     Dispatcher.Invoke(new Action(() =>

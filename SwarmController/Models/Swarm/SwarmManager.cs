@@ -46,6 +46,22 @@ namespace SwarmController.Models.Swarm
             return new Drone(-10,-10);
         }
 
+        public MissionBase getMissionByPort(int port)
+        {
+            PlanController pC = PlanController.getPlanController();
+            foreach(MissionBase mb in pC.allMissions)
+            {
+                foreach(Drone drone in mb.drones)
+                {
+                    if(drone.port == port)
+                    {
+                        return mb;
+                    }
+                }
+            }
+            return new MissionBase();
+        }
+
         public void createDrones()
         {
             for(int i = 0; i < totalNumberOfDrones; i++)

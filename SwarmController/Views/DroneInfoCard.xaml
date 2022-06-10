@@ -5,28 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SwarmController.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="140" d:DesignWidth="270"
+             d:DesignHeight="150" d:DesignWidth="270"
              Background="White">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="136,10,0,0" TextWrapping="Wrap" Text="Port" VerticalAlignment="Top" Height="15" Width="22"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,34,0,0" TextWrapping="Wrap" Text="Roll" VerticalAlignment="Top" Height="15" Width="22"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,49,0,0" TextWrapping="Wrap" Text="Yaw" VerticalAlignment="Top" Height="15" Width="22"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,64,0,0" TextWrapping="Wrap" Text="Pitch" VerticalAlignment="Top" Height="15" Width="28"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,84,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top" Height="15" Width="28"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,99,0,0" TextWrapping="Wrap" Text="Lng" VerticalAlignment="Top" Height="15" Width="28"/>
-        <TextBlock HorizontalAlignment="Left" Margin="136,114,0,0" TextWrapping="Wrap" Text="Alt" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,30,0,0" TextWrapping="Wrap" Text="Mission" VerticalAlignment="Top" Height="15" Width="45"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,65,0,0" TextWrapping="Wrap" Text="Roll" VerticalAlignment="Top" Height="15" Width="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,80,0,0" TextWrapping="Wrap" Text="Yaw" VerticalAlignment="Top" Height="15" Width="22"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,95,0,0" TextWrapping="Wrap" Text="Pitch" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,130,0,0" TextWrapping="Wrap" Text="Lat" VerticalAlignment="Top" Height="15" Width="19"/>
+        <TextBlock HorizontalAlignment="Left" Margin="114,130,0,0" TextWrapping="Wrap" Text="Lng" VerticalAlignment="Top" Height="15" Width="28"/>
+        <TextBlock HorizontalAlignment="Left" Margin="208,130,0,0" TextWrapping="Wrap" Text="Alt" VerticalAlignment="Top" Height="15" Width="18"/>
 
         <TextBlock x:Name="tb_port"  Text="{Binding port}" HorizontalAlignment="Left" Margin="186,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="186,34,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="186,49,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="186,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_lat"   Text="{Binding lat}" HorizontalAlignment="Left" Margin="186,84,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_lng"   Text="{Binding lng}" HorizontalAlignment="Left" Margin="186,99,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_alt"   Text="{Binding alt}" HorizontalAlignment="Left" Margin="186,114,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_mission"  Text="{Binding mission}" HorizontalAlignment="Left" Margin="186,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="186,65,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="186,80,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="186,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_lat"   Text="{Binding lat}" HorizontalAlignment="Left" Margin="34,130,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_lng"   Text="{Binding lng}" HorizontalAlignment="Left" Margin="136,130,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_alt"   Text="{Binding alt}" HorizontalAlignment="Left" Margin="226,130,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
 
-        <!--<Image Source="../Resources/Horizon_Background.bmp"
+        <Image Source="../Resources/Horizon_Background.bmp"
                 Height="120"
-                Margin="-68,5,68,10"/>-->
+                Margin="-68,5,68,10"/>
 
 
         <Border Margin="15,15,150,25" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="50,50,50,50" RenderTransformOrigin="0.5,0.5">

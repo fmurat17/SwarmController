@@ -59,7 +59,7 @@
             <ItemsControl x:Name="droneInfoCard" ItemsSource="{Binding droneInfoList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <components:DroneInfoCard Margin="10 10 20 10" BorderThickness="2" BorderBrush="Black" Width="270" Height="140"/>
+                        <components:DroneInfoCard Margin="10 10 20 10" BorderThickness="2" BorderBrush="Black" Width="270" Height="150"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
