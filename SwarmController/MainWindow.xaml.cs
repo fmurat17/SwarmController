@@ -3,6 +3,7 @@ using GMap.NET.WindowsPresentation;
 using Haberlesme;
 using SwarmController.Enums;
 using SwarmController.Markers;
+using SwarmController.Models.Log;
 using SwarmController.Models.Plan;
 using SwarmController.Models.Swarm;
 using SwarmController.ViewModels;
@@ -45,6 +46,7 @@ namespace SwarmController
 
         SwarmManager sm = SwarmManager.getSwarmManager();
         PlanController pc = PlanController.getPlanController();
+        LogManager lM = LogManager.getLogManager();
 
         public MainWindow()
         {
@@ -56,7 +58,7 @@ namespace SwarmController
             //sv_droneInfo.DataContext = droneInfoCardListViewModel;
 
             //btn_CreateDrones_Click(null, null);
-
+            InitLog();
             createDronesViewModel();
             sm.createDrones();
 
@@ -249,9 +251,26 @@ namespace SwarmController
             MessageBox.Show("Mark target to destroy");
         }
 
-        public void addLog(string log_string)
+        public void InitLog()
         {
-            logViewModel.logList.Insert(0, log_string);
+            Thread thread = new Thread(() => addLog());
+            thread.Start();
+        }
+
+        public void addLog()
+        {
+            while (true)
+            {
+                while(lM.logList.Count != 0)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        string log_string = lM.logList.Dequeue();
+                        logViewModel.logList.Insert(0, log_string);
+                    }));
+                }
+                Thread.Sleep(1000);
+            }
         }
 
         private void btn_StartMission_Click(object sender, RoutedEventArgs e)
@@ -305,6 +324,10 @@ namespace SwarmController
             drone.availability = false;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow = this;
+        }
     }
 }
 

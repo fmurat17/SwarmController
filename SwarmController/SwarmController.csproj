@@ -106,6 +106,7 @@
     <Compile Include="Markers\DroneMarker.xaml.cs">
       <DependentUpon>DroneMarker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Log\LogManager.cs" />
     <Compile Include="Models\Plan\MissionKamikaze.cs" />
     <Compile Include="Models\Swarm\Drone.cs" />
     <Compile Include="ViewModels\DroneInfoCardListViewModel.cs" />

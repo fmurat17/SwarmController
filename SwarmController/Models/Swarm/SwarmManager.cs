@@ -1,4 +1,5 @@
 ﻿using Haberlesme;
+using SwarmController.Models.Log;
 using SwarmController.Models.Plan;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace SwarmController.Models.Swarm
         // dict<port, missionID> -1 = available, others = assigned to a mission
         //public Dictionary<int, int> allDrones = new Dictionary<int, int>();
         public List<Drone> allDrones = new List<Drone>();
+
+        LogManager lM = LogManager.getLogManager();
 
         public Drone getDroneByMissionIdAndPort(int missionID, int port)
         {
@@ -72,6 +75,7 @@ namespace SwarmController.Models.Swarm
                 allDrones.Add(drone);
                 //allDrones.Add(port, -1);
             }
+            lM.addLog($"{totalNumberOfDrones} drones are created");
         }
 
         public void InitListenAllDrones()
@@ -109,6 +113,7 @@ namespace SwarmController.Models.Swarm
                 //                                           );
             }
 
+            lM.addLog("Drones are listening");
             while (true)
             {
                 foreach (Drone drone in allDrones)
@@ -162,6 +167,7 @@ namespace SwarmController.Models.Swarm
                         if (!drone.isClosedForever)
                         {
                             Debug.WriteLine($"Connection lost with {drone.port}");
+                            lM.addLog($"Connection lost with {drone.port}");
                             drone.isClosedForever = true;
                             drone.availability = false;
                         }
@@ -275,6 +281,7 @@ namespace SwarmController.Models.Swarm
 
                 }
             }
+            lM.addLog($"Mission is uploaded for {drone.port}");
             //currentMission.tcpClients[i].Close();
             //Thread.Sleep(1000);
         }
@@ -286,14 +293,14 @@ namespace SwarmController.Models.Swarm
         }
         public void flyDrones()
         {
-            for(int i = 0; i < currentMission.drones.Count; i++)
+            lM.addLog($"Initializing drones to fly");
+            for (int i = 0; i < currentMission.drones.Count; i++)
             {
                 flyDrone(currentMission.drones[i]);
             }
         }
         public void flyDrone(Drone drone)
         {
-
             TcpClient tcpClient = drone.tcpClient;
 
             // guided'a al
@@ -319,7 +326,7 @@ namespace SwarmController.Models.Swarm
                                                        0, 1, 0, 0, 0, 0,
                                                        10,
                                                        MAVLink.MAV_CMD.TAKEOFF);
-
+            lM.addLog($"{drone.port} -> Takeoff");
             Thread.Sleep(3000); // 5 sec
 
             // auto'ya al
@@ -328,7 +335,7 @@ namespace SwarmController.Models.Swarm
                                                        3,
                                                        0, 0, 0, 0, 0,
                                                        MAVLink.MAV_CMD.DO_SET_MODE);
-
+            lM.addLog($"{drone.port} -> AUTO");
         }
 
         public Drone ReAssignDrone(Drone closedDrone)
@@ -367,8 +374,10 @@ namespace SwarmController.Models.Swarm
             if(newDrone == null)
             {
                 Debug.WriteLine("There is not enough available drone to re-assign mission!");
+                lM.addLog("Not enough drone to reassign mission");
                 return;
             }
+            lM.addLog($"{drone.port} is assigned for {newDrone.port}");
             UploadMissionToOneDrone(newDrone); // new drone as parameter
             flyDrone(newDrone); // new drone as parameter
         }
