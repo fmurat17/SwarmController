@@ -121,7 +121,6 @@ namespace SwarmController
 
                     Dispatcher.Invoke(new Action(() =>
                     {
-                    
                         droneInfoCardListViewModel.droneInfoList[i] = droneInfoCard;
 
                         mapView.Markers.Remove(drone.droneMarker);

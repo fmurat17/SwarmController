@@ -338,6 +338,7 @@ namespace SwarmController.Models.Swarm
 
             Drone newDrone = null;
 
+            // find available drone
             foreach (Drone drone in allDrones)
             {
                 if (drone.availability && drone.missionID == -1)
@@ -349,7 +350,7 @@ namespace SwarmController.Models.Swarm
 
             if (newDrone == null) return null;
 
-            MissionSurvelliance mission = (MissionSurvelliance)pC.allMissions[closedDrone.missionID];
+            MissionBase mission = pC.allMissions[closedDrone.missionID];
 
             newDrone.missionID = closedDrone.missionID;
             newDrone.droneIdInMission = mission.drones.Count;
