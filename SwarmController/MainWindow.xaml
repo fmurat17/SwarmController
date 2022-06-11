@@ -7,7 +7,7 @@
         xmlns:components="clr-namespace:SwarmController.Views"
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000"
+        Title="MainWindow" Height="700" Width="1070"
         Loaded="Window_Loaded">
 
     <Grid>
@@ -15,53 +15,104 @@
             <RowDefinition Height="130"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="200"/>
-            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Image Source="Resources/itu_logo.jpg" Width="100" Height="130" Margin="10,0,0,0"/>
+            <GroupBox Margin="20,0,0,0">
+                <GroupBox.Header>
+                    <TextBlock>
+                        <Span FontWeight="Bold">Create Mission</Span>
+                    </TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-        <gmaps:GMapControl x:Name="mapView"
-                           Grid.Row="1"
-                           Loaded="mapView_Loaded"
-                           MouseLeftButtonUp="mapView_MouseLeftButtonUp"
-                           MouseMove="mapView_MouseMove"/>
+                    <TextBlock HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="# of Drones in Mission"/><Run Text=":"/></TextBlock>
+                    <TextBox x:Name="tb_numberOfDronesInMission" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
 
-        <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
-                Margin="15,91,0,0"
-                Grid.Row="0"
-                Click="btn_Surveillance_Click"/>
+                    <TextBlock HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Mission Name:"/>
+                    <TextBox x:Name="tb_missionName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Impossible" VerticalAlignment="Top" Width="120"/>
 
-        <Button x:Name="btn_kamikaze" Content="Kamikaze" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
-            Margin="110,91,0,0"
-            Grid.Row="0"
-            Click="btn_Kamikaze_Click"/>
+                    <Button x:Name="btn_Surveillance" Content="Surveillance (SRV)" VerticalAlignment="Top" Width="100"
+                            Grid.Row="2"
+                            HorizontalAlignment="Center"
+                            Click="btn_Surveillance_Click"/>
 
-        <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="400" Height="111"
-                  Grid.Row="0"
-                  ItemsSource="{Binding logList}"/>
-        <Button x:Name="btn_StartMission" Content="Start Mission" HorizontalAlignment="Left" Margin="461,22,0,0" VerticalAlignment="Top" Width="76"
-                Click="btn_StartMission_Click"/>
-        <Button x:Name="btn_CreateDrones" Content="Create Drones" Visibility="Hidden" HorizontalAlignment="Left" Margin="243,91,0,0" VerticalAlignment="Top" Width="80"
-                Click="btn_CreateDrones_Click"/>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="10,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Lat:" VerticalAlignment="Top"/>
-        <TextBlock FontWeight="Bold" HorizontalAlignment="Left" Margin="110,17,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
-        <TextBlock x:Name="tb_Lat" HorizontalAlignment="Left" Margin="42,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_Lng" HorizontalAlignment="Left" Margin="145,17,0,0" Grid.Row="3" TextWrapping="Wrap" Text="0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_close63" Content="Close 5763" Visibility="Hidden" HorizontalAlignment="Left" Margin="16,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click"/>
-        <Button x:Name="btn_close73" Content="Close 5773" Visibility="Hidden" HorizontalAlignment="Left" Margin="90,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click"/>
-        <Button x:Name="btn_close83" Content="Close 5783" Visibility="Hidden" HorizontalAlignment="Left" Margin="164,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click"/>
-        <TextBox x:Name="tb_numberOfDronesInMission" HorizontalAlignment="Left" Height="23" Margin="143,23,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="16,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="# of Drones in Mission"/><Run Text=":"/></TextBlock>
-        <ComboBox x:Name="cmb_missionNames" HorizontalAlignment="Left" Margin="305,24,0,0" VerticalAlignment="Top" Width="120"
-                  ItemsSource="{Binding missionNames}"/>
-        <TextBox x:Name="tb_missionName" HorizontalAlignment="Left" Height="23" Margin="143,54,0,0" TextWrapping="Wrap" Text="fat" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="16,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Mission Name:"/>
+                    <Button x:Name="btn_kamikaze" Content="Kamikaze (KMZ)" VerticalAlignment="Top" Width="90"
+                            Grid.Row="2"
+                            HorizontalAlignment="Center"
+                            Click="btn_Kamikaze_Click" Grid.Column="1"/>
+
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="20,0,0,0">
+                <GroupBox.Header>
+                    <TextBlock>
+                        <Span FontWeight="Bold">Start Mission</Span>
+                    </TextBlock>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical">
+                    <ComboBox x:Name="cmb_missionNames" HorizontalAlignment="Center"
+                              Width="120"
+                              ItemsSource="{Binding missionNames}"/>
+                    <Button x:Name="btn_StartMission" Content="START" HorizontalAlignment="Center"
+                            Margin="0 20 0 0"
+                            Height="65"
+                            Width="120"
+                            Click="btn_StartMission_Click" Background="#FF42F560"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Margin="20,0,0,0">
+                <GroupBox.Header>
+                    <TextBlock>
+                        <Span FontWeight="Bold">Log</Span>
+                    </TextBlock>
+                </GroupBox.Header>
+                <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="350" Height="107"
+                          Grid.Row="0"
+                          ItemsSource="{Binding logList}"/>
+            </GroupBox>
+            <Image Source="Resources/tr_flag.png" Width="110" Height="120" Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <gmaps:GMapControl x:Name="mapView"
+                               Loaded="mapView_Loaded"
+                               MouseLeftButtonUp="mapView_MouseLeftButtonUp"
+                               MouseMove="mapView_MouseMove"/>
+
+            <TextBlock Foreground="Red" FontSize="18" Margin="0,10,250,0" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" TextWrapping="Wrap" Text="Lat:"/>
+            <TextBlock Foreground="Red" FontSize="18" Margin="0,10,110,0" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" TextWrapping="Wrap"><Run Text="L"/><Run Text="ng"/><Run Text=":"/></TextBlock>
+            <TextBlock Foreground="Red" FontSize="18" Margin="0,10,160,0" x:Name="tb_Lat" HorizontalAlignment="Right" VerticalAlignment="Top" TextWrapping="Wrap" Text="0" />
+            <TextBlock Foreground="Red" FontSize="18" Margin="0,10,20,0" x:Name="tb_Lng" HorizontalAlignment="Right" VerticalAlignment="Top" TextWrapping="Wrap" Text="0"/>
+        </Grid>
+
+
+
+
+
+        <Button x:Name="btn_CreateDrones" Content="Create Drones" Visibility="Hidden" HorizontalAlignment="Left" Margin="187,91,0,0" VerticalAlignment="Top" Width="80"
+                Click="btn_CreateDrones_Click" Grid.Column="1"/>
+                <Button x:Name="btn_close63" Content="Close 5763" Visibility="Hidden" HorizontalAlignment="Left" Margin="16,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close63_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btn_close73" Content="Close 5773" Visibility="Hidden" HorizontalAlignment="Left" Margin="34,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close73_Click" Grid.Column="1"/>
+        <Button x:Name="btn_close83" Content="Close 5783" Visibility="Hidden" HorizontalAlignment="Left" Margin="108,91,0,0" VerticalAlignment="Top" Width="74" Click="btn_close83_Click" Grid.Column="1"/>
+        
 
 
         <ScrollViewer
             Grid.Row="2"
             Margin="20 20 20 20"
             VerticalScrollBarVisibility="Auto"
-            x:Name="sv_droneInfo">
+            x:Name="sv_droneInfo" Grid.ColumnSpan="2">
             <ItemsControl x:Name="droneInfoCard" ItemsSource="{Binding droneInfoList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -75,7 +126,7 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </ScrollViewer>
-        
+
 
     </Grid>
 </Window>

@@ -18,7 +18,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="208,130,0,0" TextWrapping="Wrap" Text="Alt" VerticalAlignment="Top" Height="15" Width="18"/>
 
         <TextBlock x:Name="tb_port"  Text="{Binding port}" HorizontalAlignment="Left" Margin="186,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock x:Name="tb_mission"  Text="{Binding mission}" HorizontalAlignment="Left" Margin="186,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="tb_mission" Text="{Binding mission}" HorizontalAlignment="Left" Margin="186,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_roll"  Text="{Binding roll}" HorizontalAlignment="Left" Margin="186,65,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_yaw"   Text="{Binding yaw}" HorizontalAlignment="Left" Margin="186,80,0,0" TextWrapping="Wrap"   VerticalAlignment="Top"/>
         <TextBlock x:Name="tb_pitch" Text="{Binding pitch}" HorizontalAlignment="Left" Margin="186,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>

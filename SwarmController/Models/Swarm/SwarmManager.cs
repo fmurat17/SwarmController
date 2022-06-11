@@ -27,7 +27,7 @@ namespace SwarmController.Models.Swarm
 
         public string localhost = "127.0.0.1";
         public MissionBase currentMission = null;
-        public int totalNumberOfDrones = 6;
+        public int totalNumberOfDrones = 3;
         public int availableNumberOfDrones = 0;
 
         // dict<port, missionID> -1 = available, others = assigned to a mission
