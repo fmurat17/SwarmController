@@ -26,7 +26,7 @@ namespace SwarmController.Models.Swarm
 
         public string localhost = "127.0.0.1";
         public MissionBase currentMission = null;
-        public int totalNumberOfDrones = 8;
+        public int totalNumberOfDrones = 6;
         public int availableNumberOfDrones = 0;
 
         // dict<port, missionID> -1 = available, others = assigned to a mission
@@ -76,107 +76,98 @@ namespace SwarmController.Models.Swarm
 
         public void InitListenAllDrones()
         {
-            for(int i = 0; i < this.allDrones.Count; i++)
-            {
-                int k = i;
-                Drone drone = allDrones[k];
-                if (drone.availability)
-                {
-                    Thread thread = new Thread(() => ListenDrone(drone));
-                    thread.Start();
-                }
-                else
-                {
-                    Debug.WriteLine($"Drone with port {drone.port} is not connected!");
-                }
-            }
+            Thread thread = new Thread(() => ListenDrone());
+            thread.Start();
         }
-        public void ListenDrone(Drone drone)
+
+        public void ListenDrone()
         {
-            //drone.tcpClient.Connect(localhost, drone.port);
-            //TcpClient tcpClient = new TcpClient(localhost, drone.port);
-
-            TcpClient tcpClient = drone.tcpClient;
-
-            // GLOBAL_POSITION_INT - lat lng alt
-            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
-                                                       33,
-                                                       20000,
-                                                       0, 0, 0, 0, 0,
-                                                       MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
-                                                       );
-
-            // ATTITUDE - roll yaw pitch
-            SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
-                                                       30,
-                                                       20000,
-                                                       0, 0, 0, 0, 0,
-                                                       MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
-                                                       );
-
-            // HEARTBEAT
-            //SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
-            //                                           0,
-            //                                           50000,
-            //                                           0, 0, 0, 0, 0,
-            //                                           MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
-            //                                           );
-
-            //int hbCounter = 0; // heartbeat counter
-            //int timeCounter = 0;
-            //while (drone.availability)
-            while (drone.tcpClient.Connected)
+            foreach(Drone drone in allDrones)
             {
-                //Debug.WriteLine($"{drone.port} => {drone.tcpClient.Connected} - {drone.tcpClient.Available}");
+                // GLOBAL_POSITION_INT - lat lng alt
+                SendPacket.send_mavlink_command_long_t_tcp(drone.tcpClient,
+                                                           33,
+                                                           20000,
+                                                           0, 0, 0, 0, 0,
+                                                           MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
+                                                           );
 
-                var packet = new MAVLink.MAVLinkMessage();
-                try
-                {
-                    packet = ReceivePacket.ReceieveTCPPackets(tcpClient);
-                }
-                catch
-                {
+                // ATTITUDE - roll yaw pitch
+                SendPacket.send_mavlink_command_long_t_tcp(drone.tcpClient,
+                                                           30,
+                                                           20000,
+                                                           0, 0, 0, 0, 0,
+                                                           MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
+                                                           );
 
-                }
+                // HEARTBEAT
+                //SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
+                //                                           0,
+                //                                           50000,
+                //                                           0, 0, 0, 0, 0,
+                //                                           MAVLink.MAV_CMD.SET_MESSAGE_INTERVAL
+                //                                           );
+            }
 
-                try
+            while (true)
+            {
+                foreach (Drone drone in allDrones)
                 {
-                    if (packet != null)
+                    if (drone.tcpClient.Connected)
                     {
-                        //Debug.WriteLine($"{drone.port} -> {packet}");
-
-                        switch (packet.msgtypename)
+                        var packet = new MAVLink.MAVLinkMessage();
+                        try
                         {
-                            case "HEARTBEAT":
-                                //hbCounter++;
-                                break;
-                            case "ATTITUDE":
-                                MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
-                                drone.roll  = Math.Round(attitude.roll  * 180 / Math.PI, 3);
-                                drone.yaw   = Math.Round(attitude.yaw   * 180 / Math.PI, 3);
-                                drone.pitch = Math.Round(attitude.pitch * 180 / Math.PI, 3);
-                                break;
-                            case "GLOBAL_POSITION_INT":
-                                MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
-                                drone.lat = Math.Round(pos.lat / 1e7, 6);
-                                drone.lng = Math.Round(pos.lon / 1e7, 6);
-                                drone.alt = pos.relative_alt / 1000.0;
-                                //Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
-                                break;
+                            packet = ReceivePacket.ReceieveTCPPackets(drone.tcpClient);
+                        }
+                        catch
+                        {
+
+                        }
+
+                        try
+                        {
+                            if (packet != null)
+                            {
+                                //Debug.WriteLine($"{drone.port} -> {packet}");
+
+                                switch (packet.msgtypename)
+                                {
+                                    case "HEARTBEAT":
+                                        //hbCounter++;
+                                        break;
+                                    case "ATTITUDE":
+                                        MAVLink.mavlink_attitude_t attitude = (MAVLink.mavlink_attitude_t)packet.data;
+                                        drone.roll  = Math.Round(attitude.roll  * 180 / Math.PI, 3);
+                                        drone.yaw   = Math.Round(attitude.yaw   * 180 / Math.PI, 3);
+                                        drone.pitch = Math.Round(attitude.pitch * 180 / Math.PI, 3);
+                                        break;
+                                    case "GLOBAL_POSITION_INT":
+                                        MAVLink.mavlink_global_position_int_t pos = (MAVLink.mavlink_global_position_int_t)packet.data;
+                                        drone.lat = Math.Round(pos.lat / 1e7, 6);
+                                        drone.lng = Math.Round(pos.lon / 1e7, 6);
+                                        drone.alt = pos.relative_alt / 1000.0;
+                                        //Debug.WriteLine($"[{drone.port}] {pos.lat / 1e7} - {pos.lon / 1e7}");
+                                        break;
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            Debug.WriteLine("ListenDrone -> error");
+                        }
+                    }
+                    else
+                    {
+                        if (!drone.isClosedForever)
+                        {
+                            Debug.WriteLine($"Connection lost with {drone.port}");
+                            drone.isClosedForever = true;
+                            drone.availability = false;
                         }
                     }
                 }
-                catch
-                {
-                    Debug.WriteLine("ListenDrone -> error");
-                }
-
-                //timeCounter++;
-                //Thread.Sleep(100);
             }
-            Debug.WriteLine($"Connection lost with {drone.port}");
-            drone.isClosedForever = true;
-            drone.availability = false;
         }
 
         public void InitStartMission(string missionName)
@@ -329,7 +320,7 @@ namespace SwarmController.Models.Swarm
                                                        10,
                                                        MAVLink.MAV_CMD.TAKEOFF);
 
-            Thread.Sleep(5000); // 5 sec
+            Thread.Sleep(3000); // 5 sec
 
             // auto'ya al
             SendPacket.send_mavlink_command_long_t_tcp(tcpClient,
