@@ -13,7 +13,7 @@ namespace SwarmController.Models.Plan
 
         public string missionName { get; set; }
         public int missionID { get; set; }
-        public int droneIdInMissinCounter { get; set; }
+        public int droneIdInMissionCounter { get; set; }
         public int numberOfDronesInMission { get; set; } // kaldırılabilir
         public List<int> assignedDronePorts { get; set; }
 

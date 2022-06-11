@@ -26,7 +26,7 @@ namespace SwarmController.Models.Swarm
 
         public string localhost = "127.0.0.1";
         public MissionBase currentMission = null;
-        public int totalNumberOfDrones = 3;
+        public int totalNumberOfDrones = 8;
         public int availableNumberOfDrones = 0;
 
         // dict<port, missionID> -1 = available, others = assigned to a mission
@@ -250,7 +250,7 @@ namespace SwarmController.Models.Swarm
             //wait a bit
             Thread.Sleep(200);
 
-            Route route = ((MissionSurvelliance)pC.allMissions[drone.missionID]).routes[drone.droneIdInMission];
+            Route route = pC.allMissions[drone.missionID].routes[drone.droneIdInMission];
             int numberOfMissionItems = route.gMapRoute.Points.Count;
             Debug.WriteLine($"mission_item: {numberOfMissionItems}, {port}");
             // send number of items in mission

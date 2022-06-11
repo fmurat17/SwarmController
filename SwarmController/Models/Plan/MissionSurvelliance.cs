@@ -19,7 +19,7 @@ namespace SwarmController.Models.Plan
         public MissionSurvelliance(int missionID)
         {
             this.missionID = missionID;
-            this.droneIdInMissinCounter = 0;
+            this.droneIdInMissionCounter = 0;
             routes = new List<Route>();
             drones = new List<Drone>();
             assignedDronePorts = new List<int>();

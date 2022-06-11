@@ -25,9 +25,14 @@
                            MouseMove="mapView_MouseMove"/>
 
         <Button x:Name="btn_Surveillance" Content="Surveillance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
-                Margin="305,62,0,0"
+                Margin="15,91,0,0"
                 Grid.Row="0"
                 Click="btn_Surveillance_Click"/>
+
+        <Button x:Name="btn_kamikaze" Content="Kamikaze" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"
+            Margin="110,91,0,0"
+            Grid.Row="0"
+            Click="btn_Kamikaze_Click"/>
 
         <ListView x:Name="lv_Log" HorizontalAlignment="Right" VerticalAlignment="Top" Width="400" Height="111"
                   Grid.Row="0"
@@ -69,6 +74,7 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </ScrollViewer>
+        
 
     </Grid>
 </Window>

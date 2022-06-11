@@ -96,9 +96,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\MeasurementTool.cs" />
+    <Compile Include="Markers\AirDefenceMarker.xaml.cs">
+      <DependentUpon>AirDefenceMarker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Markers\DecoyMarker.xaml.cs">
+      <DependentUpon>DecoyMarker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Markers\DroneMarker.xaml.cs">
       <DependentUpon>DroneMarker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Plan\MissionKamikaze.cs" />
     <Compile Include="Models\Swarm\Drone.cs" />
     <Compile Include="ViewModels\DroneInfoCardListViewModel.cs" />
     <Compile Include="ViewModels\DroneInfoCardViewModel.cs" />
@@ -121,6 +129,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Markers\AirDefenceMarker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Markers\DecoyMarker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Markers\DroneMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

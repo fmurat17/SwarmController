@@ -178,13 +178,34 @@ namespace SwarmController
                     ms.missionName = missionName;
                     missionNamesViewModel.missionNames.Add(missionName);
 
-                    sm.currentMission = ms;
                     pc.allMissions.Add(ms);
                     (ms as MissionSurvelliance).createRoutes();
 
                     surveillanceClickCounter = 0;
                     clickFunction = ClickFunction.Select;
                 }
+            }else if (clickFunction == ClickFunction.CreateMissionKamikaze)
+            {
+                Point mousePos = e.GetPosition(mapView);
+                double lat = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lat;
+                double lng = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lng;
+                PointLatLng targetCoords = new PointLatLng(lat, lng);
+                Debug.WriteLine($"lat: {lat}, lng: {lng}");
+
+                GMapMarker gmapMarker = new GMapMarker(targetCoords);
+                gmapMarker.Shape = new AirDefenceMarker();
+                gmapMarker.Offset = new Point(-25, -25);
+                mapView.Markers.Add(gmapMarker);
+
+                string missionName = "KMZ_" + tb_missionName.Text;
+                ms.missionName = missionName;
+                missionNamesViewModel.missionNames.Add(missionName);
+
+                pc.allMissions.Add(ms);
+                (ms as MissionKamikaze).airDefenceLocation = targetCoords;
+                (ms as MissionKamikaze).createRoutes();
+
+                clickFunction = ClickFunction.Select;
             }
 
         }
@@ -204,6 +225,29 @@ namespace SwarmController
             ms = new MissionSurvelliance(missionIDCounter++);
             ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
             MessageBox.Show("Mark fields to watch");
+        }
+        private void btn_Kamikaze_Click(object sender, RoutedEventArgs e)
+        {
+            int desiredNumberOfDronesInTheMission = int.Parse(tb_numberOfDronesInMission.Text.ToString());
+
+            if (desiredNumberOfDronesInTheMission > sm.availableNumberOfDrones)
+            {
+                MessageBox.Show($"There is only {sm.availableNumberOfDrones} drones available!",
+                                "Mission Creation Failed");
+
+                return;
+            }else if(desiredNumberOfDronesInTheMission < 3)
+            {
+                MessageBox.Show($"At least 3 drones are needed for this mission!",
+                                "Mission Creation Failed");
+
+                return;
+            }
+
+            clickFunction = ClickFunction.CreateMissionKamikaze;
+            ms = new MissionKamikaze(missionIDCounter++);
+            ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
+            MessageBox.Show("Mark target to destroy");
         }
 
         public void addLog(string log_string)
@@ -261,6 +305,7 @@ namespace SwarmController
             Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5780);
             drone.availability = false;
         }
+
     }
 }
 
