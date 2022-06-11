@@ -111,6 +111,7 @@
     <Compile Include="Models\Swarm\Drone.cs" />
     <Compile Include="ViewModels\DroneInfoCardListViewModel.cs" />
     <Compile Include="ViewModels\DroneInfoCardViewModel.cs" />
+    <Compile Include="ViewModels\DroneNumbersViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MissionNamesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

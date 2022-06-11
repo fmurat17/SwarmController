@@ -1,6 +1,7 @@
 ﻿using Haberlesme;
 using SwarmController.Models.Log;
 using SwarmController.Models.Plan;
+using SwarmController.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +36,7 @@ namespace SwarmController.Models.Swarm
         public List<Drone> allDrones = new List<Drone>();
 
         LogManager lM = LogManager.getLogManager();
+        public DroneNumbersViewModel droneNumbersViewModel = new DroneNumbersViewModel(3, 0);
 
         public Drone getDroneByMissionIdAndPort(int missionID, int port)
         {
@@ -219,6 +221,10 @@ namespace SwarmController.Models.Swarm
                     allDrones[p].droneIdInMission = currentMission.drones.Count;
                     currentMission.drones.Add(allDrones[p]);
                     currentMission.assignedDronePorts.Add(port);
+
+                    droneNumbersViewModel.availableNumberOfDrones--;
+                    droneNumbersViewModel.inMissionNumberOfDrones++;
+
                     i++;
                 }
                 p++;
@@ -364,6 +370,9 @@ namespace SwarmController.Models.Swarm
             mission.routes.Add(mission.routes[closedDrone.droneIdInMission]);
             mission.drones.Add(newDrone);
             mission.assignedDronePorts.Add(newDrone.port);
+
+            droneNumbersViewModel.availableNumberOfDrones--;
+            droneNumbersViewModel.inMissionNumberOfDrones++;
 
             return newDrone;
             //mission.numberOfDronesInMission++; // bi şeye etki etmeyebilir şimdilik

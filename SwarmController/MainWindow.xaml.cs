@@ -55,13 +55,14 @@ namespace SwarmController
             lv_Log.DataContext = logViewModel;
             cmb_missionNames.DataContext = missionNamesViewModel;
             droneInfoCard.DataContext = droneInfoCardListViewModel;
+            sp_droneNumbers.DataContext = sm.droneNumbersViewModel;
             //sv_droneInfo.DataContext = droneInfoCardListViewModel;
 
             //btn_CreateDrones_Click(null, null);
             InitLog();
             createDronesViewModel();
             sm.createDrones();
-
+            
             createDroneMarkers();
             InitUpdateAllDronesInMap();
 
@@ -267,6 +268,9 @@ namespace SwarmController
                     {
                         string log_string = lM.logList.Dequeue();
                         logViewModel.logList.Insert(0, log_string);
+
+                        tb_inMissionNumberOfDrones.Text = sm.droneNumbersViewModel.inMissionNumberOfDrones.ToString();
+                        tb_availableNumberOfDrones.Text = sm.droneNumbersViewModel.availableNumberOfDrones.ToString();
                     }));
                 }
                 Thread.Sleep(1000);
