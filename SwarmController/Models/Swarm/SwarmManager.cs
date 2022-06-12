@@ -28,7 +28,7 @@ namespace SwarmController.Models.Swarm
 
         public string localhost = "127.0.0.1";
         public MissionBase currentMission = null;
-        public int totalNumberOfDrones = 3;
+        public int totalNumberOfDrones = 6;
         public int availableNumberOfDrones = 0;
 
         // dict<port, missionID> -1 = available, others = assigned to a mission
@@ -36,7 +36,7 @@ namespace SwarmController.Models.Swarm
         public List<Drone> allDrones = new List<Drone>();
 
         LogManager lM = LogManager.getLogManager();
-        public DroneNumbersViewModel droneNumbersViewModel = new DroneNumbersViewModel(3, 0);
+        public DroneNumbersViewModel droneNumbersViewModel = new DroneNumbersViewModel(6, 0);
 
         public Drone getDroneByMissionIdAndPort(int missionID, int port)
         {

@@ -98,20 +98,21 @@
 
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <StackPanel x:Name="sp_droneNumbers" Orientation="Vertical" Margin="13">
+            <StackPanel x:Name="sp_droneNumbers" Orientation="Vertical" Margin="10 10 10 10">
                 <TextBlock x:Name="tb_availableNumberOfDrones" Text="{Binding availableNumberOfDrones}" FontSize="60" Margin="-10" HorizontalAlignment="Center"/>
                 <TextBlock Text="Available" FontSize="20" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                 <TextBlock x:Name="tb_inMissionNumberOfDrones" Text="{Binding inMissionNumberOfDrones}" FontSize="60" Margin="-10" HorizontalAlignment="Center"/>
                 <TextBlock Text="In Mission" FontSize="20" HorizontalAlignment="Center"/>
             </StackPanel>
             <ScrollViewer
-                Margin="0 20 20 20"
-                VerticalScrollBarVisibility="Auto"
+                Margin="30 20 20 20"
+                Width="870"
+                VerticalScrollBarVisibility="Visible"
                 x:Name="sv_droneInfo" Grid.ColumnSpan="2">
                 <ItemsControl x:Name="droneInfoCard" ItemsSource="{Binding droneInfoList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <components:DroneInfoCard Margin="10 10 20 10" BorderThickness="2" BorderBrush="Black" Width="270" Height="150"/>
+                            <components:DroneInfoCard Margin="3 3 3 5" BorderThickness="2" BorderBrush="Black" Width="270" Height="150"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
