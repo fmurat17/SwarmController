@@ -43,14 +43,19 @@
                     <TextBox x:Name="tb_missionName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Impossible" VerticalAlignment="Top" Width="120"/>
 
                     <Button x:Name="btn_Surveillance" Content="Surveillance (SRV)" VerticalAlignment="Top" Width="100"
-                            Grid.Row="2"
+                            Grid.Row="1"
                             HorizontalAlignment="Center"
-                            Click="btn_Surveillance_Click"/>
+                            Click="btn_Surveillance_Click" Margin="0,29,30,0" Grid.RowSpan="2"/>
 
                     <Button x:Name="btn_kamikaze" Content="Kamikaze (KMZ)" VerticalAlignment="Top" Width="90"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            Click="btn_Kamikaze_Click" Grid.Column="1" Margin="0,28,30,0" Grid.RowSpan="2"/>
+
+                    <Button x:Name="btn_scan" Content="Scan (SCN)" VerticalAlignment="Top" Width="90"
                             Grid.Row="2"
                             HorizontalAlignment="Center"
-                            Click="btn_Kamikaze_Click" Grid.Column="1"/>
+                            Click="btn_Scan_Click" Margin="0,18,40,-2"/>
 
                 </Grid>
             </GroupBox>

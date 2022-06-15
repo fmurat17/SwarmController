@@ -333,7 +333,7 @@ namespace SwarmController.Models.Swarm
                                                        10,
                                                        MAVLink.MAV_CMD.TAKEOFF);
             lM.addLog($"{drone.port} -> Takeoff");
-            Thread.Sleep(3000); // 5 sec
+            Thread.Sleep(5000); // 5 sec
 
             // auto'ya al
             SendPacket.send_mavlink_command_long_t_tcp(tcpClient,

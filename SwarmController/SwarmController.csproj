@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Models\LogManager\LogManager.cs" />
     <Compile Include="Models\Plan\MissionKamikaze.cs" />
+    <Compile Include="Models\Plan\MissionScan.cs" />
     <Compile Include="Models\Swarm\Drone.cs" />
     <Compile Include="ViewModels\DroneInfoCardListViewModel.cs" />
     <Compile Include="ViewModels\DroneInfoCardViewModel.cs" />
