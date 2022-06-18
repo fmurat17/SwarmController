@@ -268,8 +268,8 @@ namespace SwarmController.Models.Swarm
                 {
                     //if (ReceivePacket.ReceiveTCPPacket(tcpClient, "MISSION_REQUEST"))
                     {
-                        int lat = (int)(route.missionItems[j].koordinat.Lat * 1e7);
-                        int lng = (int)(route.missionItems[j].koordinat.Lng * 1e7);
+                        int lat = (int)(route.missionItems[j].coordinate.Lat * 1e7);
+                        int lng = (int)(route.missionItems[j].coordinate.Lng * 1e7);
                         float alt = (float)route.missionItems[j].altitude;
 
                         SendPacket.send_mavlink_mission_item_int_t_tcp(tcpClient,

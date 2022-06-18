@@ -13,7 +13,7 @@ namespace SwarmController.Models.Plan
         public int itemOrder { get; set; }
         public GMapMarker marker { get; set; }
         public double altitude { get; set; }
-        public PointLatLng koordinat
+        public PointLatLng coordinate
         {
             get
             {

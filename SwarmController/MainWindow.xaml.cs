@@ -281,25 +281,6 @@ namespace SwarmController
         {
             sm.InitStartMission(cmb_missionNames.SelectedItem.ToString());
         }
-
-        private void btn_CreateDrones_Click(object sender, RoutedEventArgs e)
-        {
-            Thread createDronesThread = new Thread(() => CreateDrones(3));
-            createDronesThread.Start();
-        }
-
-        private void CreateDrones(int numberOfDrones)
-        {
-            Process bashProcess = new Process();
-
-            bashProcess.StartInfo.FileName = @"D:\cygwin64\bin\bash.exe";
-            bashProcess.StartInfo.Arguments = $"--login -i -l -c 'cd ardupilot/ArduCopter; ../Tools/autotest/sim_vehicle.py -n{numberOfDrones}'";
-            bashProcess.StartInfo.UseShellExecute = true;
-
-            bashProcess.Start();
-            bashProcess.WaitForExit();
-        }
-
         private void mapView_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(mapView);
@@ -310,28 +291,29 @@ namespace SwarmController
             tb_Lng.Text = Math.Round(lng, 6).ToString();
         }
 
-        private void btn_close63_Click(object sender, RoutedEventArgs e)
-        {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5760);
-            drone.availability = false;
-        }
+        //private void btn_CreateDrones_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Thread createDronesThread = new Thread(() => CreateDrones(3));
+        //    createDronesThread.Start();
+        //}
 
-        private void btn_close73_Click(object sender, RoutedEventArgs e)
-        {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5770);
-            drone.availability = false;
-        }
+        //private void CreateDrones(int numberOfDrones)
+        //{
+        //    Process bashProcess = new Process();
 
-        private void btn_close83_Click(object sender, RoutedEventArgs e)
-        {
-            Drone drone = sm.getDroneByMissionIdAndPort(ms.missionID, 5780);
-            drone.availability = false;
-        }
+        //    bashProcess.StartInfo.FileName = @"D:\cygwin64\bin\bash.exe";
+        //    bashProcess.StartInfo.Arguments = $"--login -i -l -c 'cd ardupilot/ArduCopter; ../Tools/autotest/sim_vehicle.py -n{numberOfDrones}'";
+        //    bashProcess.StartInfo.UseShellExecute = true;
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow = this;
-        }
+        //    bashProcess.Start();
+        //    bashProcess.WaitForExit();
+        //}
+
+
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Application.Current.MainWindow = this;
+        //}
     }
 }
 

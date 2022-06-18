@@ -27,16 +27,11 @@ namespace SwarmController.Models.Log
         public void addLog(string log)
         {
             //(Application.Current.MainWindow as MainWindow).addLog(log);
-            logList.Enqueue(getCurrentTime() + " " + log);
+            logList.Enqueue(getCurrentTime() + " | " + log);
         }
 
         public string getCurrentTime()
         {
-            // Use current time, with a format string.
-            //DateTime time = DateTime.Now;
-            //string format = "MMM ddd d HH:mm yyyy";
-            //return time.ToString(format);
-
             return DateTime.Now.ToString();
 
         }

@@ -21,11 +21,10 @@ namespace SwarmController.Models.Plan
         }
 
 
-        public MissionItem selectedMissionItem = null;
-        public Route selectedRoute = null;
-        //public MissionBase currentMission = null;
+        //public MissionItem selectedMissionItem = null;
+        //public Route selectedRoute = null;
 
-        public List<Route> allRoutes = new List<Route>();
+        //public List<Route> allRoutes = new List<Route>();
         public List<MissionBase> allMissions = new List<MissionBase>();
 
         public MissionBase getMissionByName(string missionName)
