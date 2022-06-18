@@ -10,6 +10,7 @@ namespace SwarmController.Enums
     {
         Select,
         CreateMissionSurveillance,
-        CreateMissionKamikaze
+        CreateMissionKamikaze,
+        CreateMissionScan
     }
 }

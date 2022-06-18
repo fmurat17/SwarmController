@@ -34,6 +34,7 @@ namespace SwarmController
     {
         public ClickFunction clickFunction;
         public int surveillanceClickCounter = 0;
+        public int scanCornerCounter = 0;
         public List<PointLatLng> corners;
         public MissionBase ms;
         public int missionIDCounter;
@@ -209,8 +210,40 @@ namespace SwarmController
 
                 clickFunction = ClickFunction.Select;
             }
+            else if (clickFunction == ClickFunction.CreateMissionScan)
+            {
+                Point mousePos = e.GetPosition(mapView);
+                double lat = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lat;
+                double lng = mapView.FromLocalToLatLng((int)mousePos.X, (int)mousePos.Y).Lng;
+                PointLatLng cornerCoord = new PointLatLng(lat, lng);
+                Debug.WriteLine($"lat: {lat}, lng: {lng}");
 
-        }
+                GMapMarker gmapMarker = new GMapMarker(cornerCoord);
+                gmapMarker.Shape = new MissionItemMarker();
+                gmapMarker.Offset = new Point(-25, -25);
+                mapView.Markers.Add(gmapMarker);
+
+                if (scanCornerCounter == 0) (ms as MissionScan).Corner1 = cornerCoord;
+                else (ms as MissionScan).Corner2 = cornerCoord;
+                scanCornerCounter++;
+
+                if (scanCornerCounter == 2)
+                {
+                    string missionName = "SCN_" + tb_missionName.Text;
+                    ms.missionName = missionName;
+                    missionNamesViewModel.missionNames.Add(missionName);
+
+                    pc.allMissions.Add(ms);
+                    (ms as MissionScan).createRoutes();
+
+                    scanCornerCounter = 0;
+                    clickFunction = ClickFunction.Select;
+                }
+            }
+        
+
+    }
+
 
         private void btn_Surveillance_Click(object sender, RoutedEventArgs e)
         {
@@ -250,6 +283,24 @@ namespace SwarmController
             ms = new MissionKamikaze(missionIDCounter++);
             ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
             MessageBox.Show("Mark target to destroy");
+        }
+
+        private void btn_Scan_Click(object sender, RoutedEventArgs e)
+        {
+            int desiredNumberOfDronesInTheMission = int.Parse(tb_numberOfDronesInMission.Text.ToString());
+
+            if (desiredNumberOfDronesInTheMission > sm.availableNumberOfDrones)
+            {
+                MessageBox.Show($"There is only {sm.availableNumberOfDrones} drones available!",
+                                "Mission Creation Failed");
+
+                return;
+            }
+
+            clickFunction = ClickFunction.CreateMissionScan;
+            ms = new MissionScan(missionIDCounter++);
+            ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
+            MessageBox.Show("Mark corners to scan");
         }
 
         public void InitLog()
