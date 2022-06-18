@@ -1,4 +1,5 @@
-﻿using SwarmController.Models.Swarm;
+﻿using SwarmController.Enums;
+using SwarmController.Models.Swarm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace SwarmController.Models.Plan
 {
     public class MissionBase
     {
-
+        public MissionTypes missionType { get; set; }
         public string missionName { get; set; }
         public int missionID { get; set; }
         public int droneIdInMissionCounter { get; set; }

@@ -18,7 +18,7 @@ namespace SwarmController.Models.Plan
         public PointLatLng Corner1 { get; set; }
         public PointLatLng Corner2 { get; set; }
 
-        public double drone_scan_lenght = 0.0002;
+        public double drone_scan_lenght = 0.0009;
 
         public MissionScan(int missionID)
         {

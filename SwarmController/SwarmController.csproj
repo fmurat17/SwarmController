@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums\MissionTypes.cs" />
     <Compile Include="Helper\MeasurementTool.cs" />
     <Compile Include="Markers\AirDefenceMarker.xaml.cs">
       <DependentUpon>AirDefenceMarker.xaml</DependentUpon>
@@ -105,6 +106,9 @@
     </Compile>
     <Compile Include="Markers\DroneMarker.xaml.cs">
       <DependentUpon>DroneMarker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Markers\ScanMarker.xaml.cs">
+      <DependentUpon>ScanMarker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LogManager\LogManager.cs" />
     <Compile Include="Models\Plan\MissionKamikaze.cs" />
@@ -145,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Markers\MissionItemMarker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Markers\ScanMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +230,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\tr_flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\decoy2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pole.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

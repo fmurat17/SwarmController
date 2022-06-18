@@ -37,6 +37,7 @@ namespace SwarmController.Models.Swarm
 
         LogManager lM = LogManager.getLogManager();
         public Queue<Dictionary<Drone, string>> droneStatusColorQueue = new Queue<Dictionary<Drone, string>>();
+        public Queue<MissionBase> startedMissions = new Queue<MissionBase>();
         public DroneNumbersViewModel droneNumbersViewModel = new DroneNumbersViewModel(3, 0);
 
         public Drone getDroneByMissionIdAndPort(int missionID, int port)
@@ -187,6 +188,7 @@ namespace SwarmController.Models.Swarm
         {
             PlanController pc = PlanController.getPlanController();
             currentMission = pc.getMissionByName(missionName);
+            startedMissions.Enqueue(currentMission);
 
             Thread start_mission_thread = new Thread(() => StartMission());
             start_mission_thread.Start();

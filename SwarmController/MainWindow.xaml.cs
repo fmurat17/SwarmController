@@ -139,12 +139,68 @@ namespace SwarmController
                         (droneWithColor.First().Key.droneMarker.Shape as DroneMarker).port_status_color.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(droneWithColor.First().Value);
                     }
 
+                    // draw mission to map
+                    while(sm.startedMissions.Count != 0)
+                    {
+                        MissionBase mission = sm.startedMissions.Dequeue();
+                        List<Route> routes = mission.routes;
+
+                        switch (mission.missionType)
+                        {
+                            case MissionTypes.Surveillance:
+                                break;
+                            case MissionTypes.Kamikaze:
+                                DrawKamikazeItems(routes);
+                                break;
+                            case MissionTypes.Scan:
+                                DrawScanItems(routes);
+                                break;
+                            default:
+                                Debug.WriteLine("Wrong Mission Type");
+                                break;
+                        }
+                    }
+
                     // update drone numbers
                     tb_inMissionNumberOfDrones.Text = sm.droneNumbersViewModel.inMissionNumberOfDrones.ToString();
                     tb_availableNumberOfDrones.Text = sm.droneNumbersViewModel.availableNumberOfDrones.ToString();
                 }));
 
                 Thread.Sleep(200);
+            }
+        }
+
+        private void DrawKamikazeItems(List<Route> routes)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                PointLatLng point = routes[i].gMapRoute.Points[1];
+                GMapMarker gmapMarker = new GMapMarker(point);
+                gmapMarker.Shape = new DecoyMarker();
+                gmapMarker.Offset = new Point(-25, -25);
+                mapView.Markers.Add(gmapMarker);
+            }
+        }
+
+        private void DrawScanItems(List<Route> routes)
+        {
+            List<GMapRoute> routesWithoutHome = new List<GMapRoute>();
+
+            for(int i = 0; i < routes.Count; i++)
+            {
+                GMapRoute r = new GMapRoute(routes[i].gMapRoute.Points);
+                r.Shape = new Path()
+                {
+                    Stroke = Brushes.Green,
+                    StrokeThickness = 3,
+                };
+                r.Points.RemoveAt(0);
+                routesWithoutHome.Add(r);
+            }
+
+            for(int i = 0; i < routesWithoutHome.Count; i++)
+            {
+                mapView.Markers.Add(routesWithoutHome[i]);
             }
         }
 
@@ -190,6 +246,7 @@ namespace SwarmController
                     ms.missionName = missionName;
                     missionNamesViewModel.missionNames.Add(missionName);
 
+                    ms.missionType = MissionTypes.Surveillance;
                     pc.allMissions.Add(ms);
                     (ms as MissionSurvelliance).createRoutes();
 
@@ -213,6 +270,7 @@ namespace SwarmController
                 ms.missionName = missionName;
                 missionNamesViewModel.missionNames.Add(missionName);
 
+                ms.missionType = MissionTypes.Kamikaze;
                 pc.allMissions.Add(ms);
                 (ms as MissionKamikaze).airDefenceLocation = targetCoords;
                 (ms as MissionKamikaze).createRoutes();
@@ -228,8 +286,8 @@ namespace SwarmController
                 Debug.WriteLine($"lat: {lat}, lng: {lng}");
 
                 GMapMarker gmapMarker = new GMapMarker(cornerCoord);
-                gmapMarker.Shape = new MissionItemMarker();
-                gmapMarker.Offset = new Point(-25, -25);
+                gmapMarker.Shape = new ScanMarker();
+                gmapMarker.Offset = new Point(-15, -15);
                 mapView.Markers.Add(gmapMarker);
 
                 if (scanCornerCounter == 0) (ms as MissionScan).Corner1 = cornerCoord;
@@ -242,6 +300,7 @@ namespace SwarmController
                     ms.missionName = missionName;
                     missionNamesViewModel.missionNames.Add(missionName);
 
+                    ms.missionType = MissionTypes.Scan;
                     pc.allMissions.Add(ms);
                     (ms as MissionScan).createRoutes();
 
