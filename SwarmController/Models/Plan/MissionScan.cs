@@ -92,9 +92,9 @@ namespace SwarmController.Models.Plan
                         End_pos = new PointLatLng(Corner2.Lat, Long_iter);
                     }
 
-                    Debug.WriteLine($"Drone: {i}, Mission Order {item_order_count}");
-                    Debug.WriteLine($"Start: {Start_pos.Lat}, ---- {Start_pos.Lng}");
-                    Debug.WriteLine($"End: {End_pos.Lat}, ---- {End_pos.Lng}");
+                    //Debug.WriteLine($"Drone: {i}, Mission Order {item_order_count}");
+                    //Debug.WriteLine($"Start: {Start_pos.Lat}, ---- {Start_pos.Lng}");
+                    //Debug.WriteLine($"End: {End_pos.Lat}, ---- {End_pos.Lng}");
 
                     GMapMarker gmapMarker1 = new GMapMarker(Start_pos);
                     gmapMarker1.Shape = new MissionItemMarker();

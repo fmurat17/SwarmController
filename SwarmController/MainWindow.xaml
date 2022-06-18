@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="# of Drones in Mission"/><Run Text=":"/></TextBlock>
@@ -41,20 +41,24 @@
                     <TextBlock HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Mission Name:"/>
                     <TextBox x:Name="tb_missionName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Impossible" VerticalAlignment="Top" Width="120"/>
 
-                    <Button x:Name="btn_Surveillance" Content="Surveillance (SRV)" VerticalAlignment="Top" Width="100"
-                            Grid.Row="1"
-                            HorizontalAlignment="Center"
-                            Click="btn_Surveillance_Click" Margin="0,29,30,0" Grid.RowSpan="2"/>
-
-                    <Button x:Name="btn_kamikaze" Content="Kamikaze (KMZ)" VerticalAlignment="Top" Width="90"
-                            Grid.Row="1"
-                            HorizontalAlignment="Center"
-                            Click="btn_Kamikaze_Click" Grid.Column="1" Margin="0,28,30,0" Grid.RowSpan="2"/>
-
-                    <Button x:Name="btn_scan" Content="Scan (SCN)" VerticalAlignment="Top" Width="90"
+                    <Button x:Name="btn_Surveillance" Content="Surveillance" VerticalAlignment="Center" Width="70"
                             Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Left"
+                            Click="btn_Surveillance_Click" Margin="0" Grid.RowSpan="2"/>
+
+                    <Button x:Name="btn_kamikaze" Content="Kamikaze" VerticalAlignment="Center" Width="70"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
                             HorizontalAlignment="Center"
-                            Click="btn_Scan_Click" Margin="0,18,40,-2"/>
+                            Click="btn_Kamikaze_Click" Margin="0" Grid.RowSpan="2"/>
+
+                    <Button x:Name="btn_scan" Content="Scan" VerticalAlignment="Center" Width="70"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Right"
+                            Margin="0"
+                            Click="btn_Scan_Click" />
 
                 </Grid>
             </GroupBox>
