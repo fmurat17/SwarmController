@@ -8,5 +8,6 @@
     <Grid>
         <Image Source="../Resources/drone.png" Width="50" Height="50"/>
         <TextBlock x:Name="port" Text="0" HorizontalAlignment="Left" Margin="12,-15,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Name="port_status_color" Width="10" Height="10" Background="Green"/>
     </Grid>
 </UserControl>

@@ -131,6 +131,14 @@ namespace SwarmController
                         logViewModel.logList.Insert(0, log_string);
                     }
 
+                    // update drone status colors
+                    while(sm.droneStatusColorQueue.Count != 0)
+                    {
+                        Dictionary<Drone, string> droneWithColor = sm.droneStatusColorQueue.Dequeue();
+
+                        (droneWithColor.First().Key.droneMarker.Shape as DroneMarker).port_status_color.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(droneWithColor.First().Value);
+                    }
+
                     // update drone numbers
                     tb_inMissionNumberOfDrones.Text = sm.droneNumbersViewModel.inMissionNumberOfDrones.ToString();
                     tb_availableNumberOfDrones.Text = sm.droneNumbersViewModel.availableNumberOfDrones.ToString();

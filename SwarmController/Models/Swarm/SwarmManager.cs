@@ -36,6 +36,7 @@ namespace SwarmController.Models.Swarm
         public List<Drone> allDrones = new List<Drone>();
 
         LogManager lM = LogManager.getLogManager();
+        public Queue<Dictionary<Drone, string>> droneStatusColorQueue = new Queue<Dictionary<Drone, string>>();
         public DroneNumbersViewModel droneNumbersViewModel = new DroneNumbersViewModel(3, 0);
 
         public Drone getDroneByMissionIdAndPort(int missionID, int port)
@@ -172,6 +173,10 @@ namespace SwarmController.Models.Swarm
                             lM.addLog($"Connection lost with {drone.port}");
                             drone.isClosedForever = true;
                             drone.availability = false;
+
+                            Dictionary<Drone, string> droneWithColor = new Dictionary<Drone, string>();
+                            droneWithColor.Add(drone, "Red");
+                            droneStatusColorQueue.Enqueue(droneWithColor);
                         }
                     }
                 }
@@ -373,6 +378,12 @@ namespace SwarmController.Models.Swarm
 
             droneNumbersViewModel.availableNumberOfDrones--;
             droneNumbersViewModel.inMissionNumberOfDrones++;
+
+            newDrone.isReassigned = true;
+
+            Dictionary<Drone, string> droneWithColor = new Dictionary<Drone, string>();
+            droneWithColor.Add(newDrone, "Blue");
+            droneStatusColorQueue.Enqueue(droneWithColor);
 
             return newDrone;
             //mission.numberOfDronesInMission++; // bi şeye etki etmeyebilir şimdilik

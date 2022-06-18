@@ -135,12 +135,27 @@ namespace SwarmController.Models.Swarm
             }
         }
 
+        private bool _isReassigned;
+        public bool isReassigned
+        {
+            get
+            {
+                return _isReassigned;
+            }
+            set
+            {
+                _isReassigned = value;
+            }
+        }
+
+
         private string _connectionColor;
         public string connectionColor
         {
             get
             {
-                if (this.availability) _connectionColor = "Green";
+                if (this.availability && !this.isReassigned) _connectionColor = "Green";
+                else if (this.availability && this.isReassigned) _connectionColor = "Blue";
                 else _connectionColor = "Red";
 
                 return _connectionColor;
@@ -168,6 +183,7 @@ namespace SwarmController.Models.Swarm
             this.yaw        = 0;
             this.pitch      = 0;
             this.isClosedForever = false;
+            this.isReassigned = false;
 
             try
             {
