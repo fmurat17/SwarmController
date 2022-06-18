@@ -60,12 +60,11 @@ namespace SwarmController
             //sv_droneInfo.DataContext = droneInfoCardListViewModel;
 
             //btn_CreateDrones_Click(null, null);
-            InitLog();
             createDronesViewModel();
             sm.createDrones();
             
             createDroneMarkers();
-            InitUpdateAllDronesInMap();
+            InitDispatcherUIUpdaterThread();
 
             sm.InitListenAllDrones();
         }
@@ -88,53 +87,55 @@ namespace SwarmController
             }
         }
 
-        private void InitUpdateAllDronesInMap()
+        private void InitDispatcherUIUpdaterThread()
         {
-            Thread updateDronesInMap_Thread = new Thread(() => UpdateDronesInMapThread());
-            updateDronesInMap_Thread.Start();
+            Thread dispatcherUIUpdaterThread = new Thread(() => DispatcherUIUpdaterThread());
+            dispatcherUIUpdaterThread.Start();
         }
 
-        private void UpdateDronesInMapThread()
+        private void DispatcherUIUpdaterThread()
         {
             while (true)
             {
-                for (int i = 0; i < sm.allDrones.Count; i++)
+                //Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.Invoke(new Action(() =>
                 {
-                    //Dispatcher.BeginInvoke(new Action(() =>
-                    //{
-                    //    mapView.Markers.Remove(drone.droneMarker);
-
-                    //    drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
-
-                    //    mapView.Markers.Add(drone.droneMarker);
-                    //}));
-
-                    Drone drone = sm.allDrones[i];
-                    MissionBase mission = SwarmManager.getSwarmManager().getMissionByPort(drone.port);
-
-                    DroneInfoCardViewModel droneInfoCard = new DroneInfoCardViewModel(drone.roll,
-                                                                                      drone.yaw,
-                                                                                      drone.pitch,
-                                                                                      drone.lat,
-                                                                                      drone.lng,
-                                                                                      drone.alt,
-                                                                                      drone.connectionColor,
-                                                                                      drone.port,
-                                                                                      mission.ToString());
-
-
-                    Dispatcher.Invoke(new Action(() =>
+                    // update drones in map
+                    for (int i = 0; i < sm.allDrones.Count; i++)
                     {
+
+                        Drone drone = sm.allDrones[i];
+                        MissionBase mission = sm.getMissionByPort(drone.port);
+
+                        DroneInfoCardViewModel droneInfoCard = new DroneInfoCardViewModel(drone.roll,
+                                                                                          drone.yaw,
+                                                                                          drone.pitch,
+                                                                                          drone.lat,
+                                                                                          drone.lng,
+                                                                                          drone.alt,
+                                                                                          drone.connectionColor,
+                                                                                          drone.port,
+                                                                                          mission.ToString());
+
                         droneInfoCardListViewModel.droneInfoList[i] = droneInfoCard;
 
                         mapView.Markers.Remove(drone.droneMarker);
-
                         drone.droneMarker.Position = new PointLatLng(drone.lat, drone.lng);
-
                         mapView.Markers.Add(drone.droneMarker);
-                    }));
+                    }
+                    
+                    // update log viewer
+                    while (lM.logList.Count != 0)
+                    {
+                        string log_string = lM.logList.Dequeue();
+                        logViewModel.logList.Insert(0, log_string);
+                    }
 
-                }
+                    // update drone numbers
+                    tb_inMissionNumberOfDrones.Text = sm.droneNumbersViewModel.inMissionNumberOfDrones.ToString();
+                    tb_availableNumberOfDrones.Text = sm.droneNumbersViewModel.availableNumberOfDrones.ToString();
+                }));
+
                 Thread.Sleep(200);
             }
         }
@@ -301,31 +302,6 @@ namespace SwarmController
             ms = new MissionScan(missionIDCounter++);
             ms.numberOfDronesInMission = desiredNumberOfDronesInTheMission;
             MessageBox.Show("Mark corners to scan");
-        }
-
-        public void InitLog()
-        {
-            Thread thread = new Thread(() => addLog());
-            thread.Start();
-        }
-
-        public void addLog()
-        {
-            while (true)
-            {
-                while(lM.logList.Count != 0)
-                {
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        string log_string = lM.logList.Dequeue();
-                        logViewModel.logList.Insert(0, log_string);
-
-                        tb_inMissionNumberOfDrones.Text = sm.droneNumbersViewModel.inMissionNumberOfDrones.ToString();
-                        tb_availableNumberOfDrones.Text = sm.droneNumbersViewModel.availableNumberOfDrones.ToString();
-                    }));
-                }
-                Thread.Sleep(1000);
-            }
         }
 
         private void btn_StartMission_Click(object sender, RoutedEventArgs e)
