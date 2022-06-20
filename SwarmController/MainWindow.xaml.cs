@@ -191,7 +191,7 @@ namespace SwarmController
                 GMapRoute r = new GMapRoute(routes[i].gMapRoute.Points);
                 r.Shape = new Path()
                 {
-                    Stroke = Brushes.Green,
+                    Stroke = routes[i].colors[i],
                     StrokeThickness = 3,
                 };
                 r.Points.RemoveAt(0);
